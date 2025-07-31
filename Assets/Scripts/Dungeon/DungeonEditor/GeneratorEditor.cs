@@ -6,7 +6,7 @@ namespace Dungeon.DungeonEditor
     [CustomEditor(typeof(Generator))]
     public class GeneratorEditor: Editor
     {
-        override public void OnInspectorGUI()
+        public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
