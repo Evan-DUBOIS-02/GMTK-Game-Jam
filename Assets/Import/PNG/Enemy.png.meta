@@ -178,7 +178,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -192,7 +192,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -216,7 +216,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -1335,7 +1335,55 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Enemy_0: 8596640243658272642
+      Enemy_1: -7642239419928554605
+      Enemy_10: -7734248497391147085
+      Enemy_11: -8714037839689498976
+      Enemy_12: 7867557418624504665
+      Enemy_13: 3296816500878435913
+      Enemy_14: 5540866796086995345
+      Enemy_15: 7882272785022910062
+      Enemy_16: -3824095377679173771
+      Enemy_17: -3606938999716188695
+      Enemy_18: -6322652313883057565
+      Enemy_19: -6915605642361400022
+      Enemy_2: -3876759189950653258
+      Enemy_20: -7767654313103843454
+      Enemy_21: -1902865523280736888
+      Enemy_22: -3575372549568559383
+      Enemy_23: 9190401040988841920
+      Enemy_24: 2835644302679746783
+      Enemy_25: 4673373542974900038
+      Enemy_26: -955028360551415169
+      Enemy_27: 3825834745654634165
+      Enemy_28: 5682344071447026491
+      Enemy_29: 894830005799034562
+      Enemy_3: -5720429097031363069
+      Enemy_30: 159274010437077831
+      Enemy_31: 691323044159955749
+      Enemy_32: 4132268951892142594
+      Enemy_33: 5700257364922400560
+      Enemy_34: 6256094347580273993
+      Enemy_35: -694689393750361144
+      Enemy_36: 5358800043413731216
+      Enemy_37: 2815338611755843669
+      Enemy_38: -1486093434222665374
+      Enemy_39: -4520739028504061012
+      Enemy_4: -7911572535675539837
+      Enemy_40: -2675450273244241069
+      Enemy_41: -8589875381170007094
+      Enemy_42: -772645822046771818
+      Enemy_43: 6046289243630075468
+      Enemy_44: 658657901609354295
+      Enemy_45: 2722907309688690015
+      Enemy_46: 3602307678246799921
+      Enemy_47: -3988170746549589402
+      Enemy_5: 5398807837072792716
+      Enemy_6: -3763824636803078212
+      Enemy_7: 8273598715916126338
+      Enemy_8: -8966301255875288918
+      Enemy_9: -7875468939738959075
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

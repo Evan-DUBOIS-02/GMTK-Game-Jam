@@ -185,16 +185,16 @@ namespace Dungeon
                     structure.RoomIndex = new Vector2Int(x, y);
                     // Check if room exist at the left and open the door if necessary
                     if (x > 0 && _roomGrid[x - 1, y] != 0) 
-                        structure.OpenDoor(Vector2Int.left);
+                        structure.OpenWall(Vector2Int.left);
                     // Check if room exist at the right and open the door if necessary
                     if (x < _gridSizeX - 1 && _roomGrid[x + 1, y] != 0) 
-                        structure.OpenDoor(Vector2Int.right);
+                        structure.OpenWall(Vector2Int.right);
                     // Check if room exist at the bottom and open the door if necessary
                     if (y > 0 && _roomGrid[x, y - 1] != 0) 
-                        structure.OpenDoor(Vector2Int.down);
+                        structure.OpenWall(Vector2Int.down);
                     // Check if room exist at the top and open the door if necessary
                     if (y < _gridSizeY - 1 && _roomGrid[x, y + 1] != 0) 
-                        structure.OpenDoor(Vector2Int.up);
+                        structure.OpenWall(Vector2Int.up);
                     
                     _generatedRooms.Add(structure);
                     if (x == _gridSizeX / 2 && y == _gridSizeY / 2)
