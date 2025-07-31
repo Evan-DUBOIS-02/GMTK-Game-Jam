@@ -1,21 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Dungeon
 {
     public class Room: MonoBehaviour
     {
-        [Header("Door references")]
-        [SerializeField] private GameObject _upDoor;
-        [SerializeField] private GameObject _downDoor;
-        [SerializeField] private GameObject _rightDoor;
-        [SerializeField] private GameObject _leftDoor;
+        [Header("Walls")] 
+        [SerializeField] private GameObject _upWall;
+        [SerializeField] private GameObject _downWall;
+        [SerializeField] private GameObject _rightWall;
+        [SerializeField] private GameObject _leftWall;
         
-        [Header("Exit")]
-        [SerializeField] private Material _exitDoorMaterial;
+        [Header("Hallways")]
+        [SerializeField] private GameObject _rightHallways;
+        [SerializeField] private GameObject _downHallways;
+        
         private GameObject _exitDoor;
         
         [Header("Prefabs")]
-        [SerializeField] private GameObject _exitDoorPrefab;
+        [SerializeField] private GameObject _doorPrefab;
         [SerializeField] private GameObject _leverPrefab;
 
         private Vector2Int _roomIndex;
@@ -27,33 +30,62 @@ namespace Dungeon
         private bool _isStartingRoom = false;
         public bool IsStartingRoom{get{return _isStartingRoom;} set{_isStartingRoom = value;}}
 
-        public void OpenDoor(Vector2Int direction)
+        public void OpenWall(Vector2Int direction)
         {
             if(direction == Vector2Int.left)
-                _leftDoor.SetActive(false);
-            else if(direction == Vector2Int.right)
-                _rightDoor.SetActive(false);
-            else if(direction == Vector2Int.down)
-                _downDoor.SetActive(false);
+                _leftWall.SetActive(false);
+            else if (direction == Vector2Int.right)
+            {
+                _rightWall.SetActive(false);
+                _rightHallways.SetActive(true);
+            }
+            else if (direction == Vector2Int.down)
+            {
+                _downWall.SetActive(false);
+                _downHallways.SetActive(true);
+            }
             else if(direction == Vector2Int.up)
-                _upDoor.SetActive(false);
+                _upWall.SetActive(false);
         }
     
         #region Exit door
         public void SetAsExitRoom()
         {
+            Puzzle.ExitDoor exitDoorScript = null;
             // Place door on one of the closed door
-            if (_upDoor.activeSelf)
-                _exitDoor = _upDoor;
-            else if(_rightDoor.activeSelf)
-                _exitDoor = _rightDoor;
-            else if(_downDoor.activeSelf)
-                _exitDoor = _downDoor;
-            else if(_leftDoor.activeSelf)
-                _exitDoor = _leftDoor;
+            if (!_upWall.activeSelf)
+            {
+                
+                Vector3 position = transform.position;
+                position.y += 3.5f;
+                _exitDoor = Instantiate(_doorPrefab, position, Quaternion.identity);
+                exitDoorScript = _exitDoor.AddComponent<Puzzle.ExitDoor>();
+            }
+            else if (!_downWall.activeSelf)
+            {
+                Vector3 position = transform.position;
+                position.y -= 2.5f;
+                _exitDoor = Instantiate(_doorPrefab, position, Quaternion.identity);
+                exitDoorScript = _exitDoor.AddComponent<Puzzle.ExitDoor>();
+            }
+            else if (!_leftWall.activeSelf)
+            {
+                Vector3 position = transform.position;
+                position.x -= 3f;
+                _exitDoor = Instantiate(_doorPrefab, position, Quaternion.identity);
+                exitDoorScript = _exitDoor.AddComponent<Puzzle.ExitDoor>();
+                exitDoorScript.SetSideRenderer(false);
+            }
+            else if (!_rightWall.activeSelf)
+            {
+                Vector3 position = transform.position;
+                position.x += 3f;
+                _exitDoor = Instantiate(_doorPrefab, position, Quaternion.identity);
+                exitDoorScript = _exitDoor.AddComponent<Puzzle.ExitDoor>();
+                exitDoorScript.SetSideRenderer(true);
+            }
             
-            _exitDoor.GetComponent<SpriteRenderer>().material = _exitDoorMaterial;
-            Puzzle.ExitDoor exitDoorScript = _exitDoor.AddComponent<Puzzle.ExitDoor>();
+            _exitDoor.transform.SetParent(transform);
             exitDoorScript.ManageDoor(true);
         }
 

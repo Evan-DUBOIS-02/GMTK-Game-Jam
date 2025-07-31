@@ -154,7 +154,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -168,7 +168,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -192,7 +192,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -1135,7 +1135,47 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Animation Character_0: -2725802462314789935
+      Animation Character_1: 2096856057636608322
+      Animation Character_10: 8361635337996470805
+      Animation Character_11: -3104053322031917355
+      Animation Character_12: 7348063214214457616
+      Animation Character_13: 4578878174853471956
+      Animation Character_14: -1041800189765717073
+      Animation Character_15: 8458650330893307322
+      Animation Character_16: -2298213026384077489
+      Animation Character_17: 569239890826295667
+      Animation Character_18: 9173296145026428039
+      Animation Character_19: 3839342946424347954
+      Animation Character_2: -573835492273112088
+      Animation Character_20: -5285262034746576449
+      Animation Character_21: -5636742412966801126
+      Animation Character_22: 7960452973812368008
+      Animation Character_23: -2566070157444222300
+      Animation Character_24: 4344148687077903683
+      Animation Character_25: -6141787856799883394
+      Animation Character_26: 8550266440370896633
+      Animation Character_27: 8526171060704530229
+      Animation Character_28: 7746336021052023425
+      Animation Character_29: -9013204063574081585
+      Animation Character_3: -6098233695472480510
+      Animation Character_30: 486725696372105687
+      Animation Character_31: -1339882524965180882
+      Animation Character_32: 4248506711241412349
+      Animation Character_33: 2968792750582727625
+      Animation Character_34: 2723143701730625154
+      Animation Character_35: -9025850975783009376
+      Animation Character_36: -5100526100468844962
+      Animation Character_37: -2242358068428417739
+      Animation Character_38: -5622879770629537207
+      Animation Character_39: -5380597378974873868
+      Animation Character_4: -2042509778326027247
+      Animation Character_5: 985854518882004095
+      Animation Character_6: 1175285214324243900
+      Animation Character_7: 2944804957870294943
+      Animation Character_8: -6404242752852161981
+      Animation Character_9: 8245064947977758303
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
