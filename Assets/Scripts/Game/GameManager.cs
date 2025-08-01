@@ -13,13 +13,15 @@ namespace Game
         public static GameManager Instance => _instance;
         
         // Manage loop
-        private bool _isLoopStarted = false;
+        private bool _isLoopStarted;
 
         // Player ref (a faire: trouve via un tag que par SerializeField)
         [SerializeField] private GameObject _player;
         
         // Puzzle elements to reset at each loop
         List<Interactable> _interactables;
+        
+        [SerializeField] private GameObject _playerTypeSelector;
         
         private void Awake()
         {
@@ -38,28 +40,17 @@ namespace Game
 
         private void Update()
         {
-            // if the loop not start yet
-            if (!_isLoopStarted)
-            {
-                // Waiting player movement (a faire: après le choix de classe ?)
-                if (_player.GetComponent<PlayerMovement>().IsMoving())
-                {
-                    // Start state recording
-                    GhostManager.Instance.StartRecording();
-                    // Start the loop
-                    _isLoopStarted = true;
-                }
-            } 
             // if the player press R (a faire: quand temps ecoule ?)
-            else if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) && _isLoopStarted)
             {
                 // Start new loop
-                StartNewLoop();
+                StopLoop();
             }
         }
-        
-        public void StartNewLoop()
+
+        public void StopLoop()
         {
+            Debug.Log("StopLoop");
             // Stop the state recording
             GhostManager.Instance.StopRecording();
             // Reset player position
@@ -69,12 +60,29 @@ namespace Game
                 interactable.SetToDefaultState();
             // Stop the current loop
             _isLoopStarted = false;
+            // Show player type selector
+            _playerTypeSelector.SetActive(true);
         }
         
         // Called by the puzzle generator to register the interactable/puzzle
         public void RegisterInteractable(Interactable interactable)
         {
             _interactables.Add(interactable);
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            Debug.Log("OnTriggerExit");
+            if (!_isLoopStarted && other.GetComponent<PlayerManager>() != null)
+            {
+                Debug.Log("StartLoop");
+                // Start state recording
+                GhostManager.Instance.StartRecording();
+                // Start the loop
+                _isLoopStarted = true;
+                // Hide player type selector
+                _playerTypeSelector.SetActive(false);
+            }
         }
     }
 }

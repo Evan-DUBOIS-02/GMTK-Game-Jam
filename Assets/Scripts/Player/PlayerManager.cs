@@ -6,6 +6,7 @@ using UnityEngine;
 
 public enum PlayerType
 {
+    None,
     Engineer
 }
 
@@ -13,7 +14,8 @@ namespace Player
 {
     public class PlayerManager: MonoBehaviour
     {
-        private Interactable _currentInteractable = null;
+        private Interactable _currentInteractable;
+        private PlayerTypeSelector _playerTypeSelector;
         private PlayerState _currentState;
 
         private void Start()
@@ -23,13 +25,21 @@ namespace Player
 
         private void Update()
         {
-            if (_currentInteractable != null && Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (_currentInteractable.TryInteract(_currentState))
+                if (_currentInteractable != null)
                 {
-                    _currentState.IsInteracting = true;
-                    GhostManager.Instance.ForceRecord();
-                    GameManager.Instance.StartNewLoop();
+                    if (_currentInteractable.TryInteract(_currentState))
+                    {
+                        _currentState.IsInteracting = true;
+                        GhostManager.Instance.ForceRecord();
+                        GameManager.Instance.StopLoop();
+                    }
+                }
+                else if (_playerTypeSelector != null)
+                {
+                    _currentState.Type = _playerTypeSelector.PlayerTypeToApply;
+                    Debug.Log("Type applied: "+_currentState.Type);
                 }
             }
         }
@@ -46,7 +56,28 @@ namespace Player
             if (other.TryGetComponent(out interactable))
             {
                 _currentInteractable = interactable;
+                return;
             }
+
+            PlayerTypeSelector selector;
+            if (other.TryGetComponent(out selector))
+            {
+                _playerTypeSelector = selector;
+                return;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            Interactable interactable;
+            if (other.TryGetComponent(out interactable))
+            {
+                _currentInteractable = null;
+            }
+
+            PlayerTypeSelector selector;
+            if(other.TryGetComponent(out selector))
+                _playerTypeSelector = null;
         }
     }
 }
