@@ -14,6 +14,8 @@ namespace Dungeon
     {
         [Header("Rooms parameters")]
         [SerializeField] private GameObject _roomPrefab;    // The room prfab to instantiate
+        [SerializeField] private GameObject _horizontalHallway;
+        [SerializeField] private GameObject _verticalHallway;
         [SerializeField] private int _roomWidth = 3;        // Save this in room ?
         [SerializeField] private int _roomHeight = 3;       // Save this in room ?
         
@@ -30,7 +32,8 @@ namespace Dungeon
         private int _roomCount;                             // Room counter
         private bool _generationComplete;                   // Catch the end of the generation
         private List<Room> _generatedRooms;
-        public Room _exitRoom;
+        private List<Hallway> _hallways;
+        private Room _exitRoom;
         private PuzzleGenerator _puzzleGenerator;
         
         private void Start()
@@ -103,10 +106,13 @@ namespace Dungeon
             
             // STEP 3: Instantiate the rooms
             InstantiateRooms();
+            
+            // STEP 4: Instantiate hallways
+            InstantiateHallways();
 
             GenerateExit();
 
-            _puzzleGenerator.GeneratePuzzle(_generatedRooms, _roomGrid);
+            _puzzleGenerator.GeneratePuzzle(_generatedRooms, _hallways, _roomGrid);
         }
         
         #region STEP 1 - 3 (room generation)
@@ -158,27 +164,62 @@ namespace Dungeon
                     room.name = $"Room-{x}-{y}";
                     room.transform.SetParent(transform);
                     
-                    // Check the adjacents room to open the doors if necessary
                     Room structure = room.GetComponent<Room>();
                     structure.RoomIndex = new Vector2Int(x, y);
-                    // Check if room exist at the left and open the door if necessary
-                    if (x > 0 && _roomGrid[x - 1, y] != 0) 
-                        structure.OpenWall(Vector2Int.left);
-                    // Check if room exist at the right and open the door if necessary
-                    if (x < _gridSizeX - 1 && _roomGrid[x + 1, y] != 0) 
-                        structure.OpenWall(Vector2Int.right);
-                    // Check if room exist at the bottom and open the door if necessary
-                    if (y > 0 && _roomGrid[x, y - 1] != 0) 
-                        structure.OpenWall(Vector2Int.down);
-                    // Check if room exist at the top and open the door if necessary
-                    if (y < _gridSizeY - 1 && _roomGrid[x, y + 1] != 0) 
-                        structure.OpenWall(Vector2Int.up);
                     
                     _generatedRooms.Add(structure);
                     if (x == _gridSizeX / 2 && y == _gridSizeY / 2)
                         structure.IsStartingRoom = true;
                 }
             }
+        }
+
+        private void InstantiateHallways()
+        {
+            for(int x = 0; x < _gridSizeX; x++)
+            for (int y = 0; y < _gridSizeY; y++)
+            {
+                if (_roomGrid[x, y] != 0)
+                {
+                    Room currentRoom = GetRoomAtIndex(new Vector2Int(x, y));
+
+                    // Check if room exist at the left and open the door if necessary
+                    if (x > 0 && _roomGrid[x - 1, y] != 0)
+                        currentRoom.OpenWall(Vector2Int.left);
+                    // Check if room exist at the right and open the door if necessary
+                    if (x < _gridSizeX - 1 && _roomGrid[x + 1, y] != 0)
+                    {
+                        currentRoom.OpenWall(Vector2Int.right);
+                        GameObject hallway = Instantiate(_horizontalHallway,
+                            currentRoom.transform.position + (Vector3.right * 3), Quaternion.identity);
+                        hallway.transform.SetParent(transform);
+                        Hallway hallwayScript = hallway.GetComponent<Hallway>();
+                        _hallways.Add(hallwayScript);
+                        hallwayScript.SetRooms(currentRoom, GetRoomAtIndex(new Vector2Int(x+1, y)));
+                    }
+
+                    // Check if room exist at the bottom and open the door if necessary
+                    if (y > 0 && _roomGrid[x, y - 1] != 0)
+                    {
+                        currentRoom.OpenWall(Vector2Int.down);
+                        GameObject hallway = Instantiate(_verticalHallway,
+                            currentRoom.transform.position + (Vector3.down * 3), Quaternion.identity);
+                        hallway.transform.SetParent(transform);
+                        Hallway hallwayScript = hallway.GetComponent<Hallway>();
+                        _hallways.Add(hallwayScript);
+                        hallwayScript.SetRooms(currentRoom, GetRoomAtIndex(new Vector2Int(x, y-1)));
+                    }
+
+                    // Check if room exist at the top and open the door if necessary
+                    if (y < _gridSizeY - 1 && _roomGrid[x, y + 1] != 0)
+                        currentRoom.OpenWall(Vector2Int.up);
+                }
+            }
+        }
+
+        private Room GetRoomAtIndex(Vector2Int roomIndex)
+        {
+            return _generatedRooms.Find(s => s.RoomIndex == roomIndex);
         }
         #endregion
 
