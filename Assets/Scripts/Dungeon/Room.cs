@@ -25,13 +25,14 @@ namespace Dungeon
         private Vector2Int _roomIndex;
         public Vector2Int RoomIndex{get{return _roomIndex;} set{_roomIndex = value;}}
 
-        private bool _containPuzzleElement = false;
+        private bool _containPuzzleElement;
         public bool ContainPuzzleElement{get{return _containPuzzleElement;}}
 
-        private bool _isStartingRoom = false;
-        private bool _isExitRoom = false;
+        private bool _isStartingRoom;
         public bool IsStartingRoom{get{return _isStartingRoom;} set{_isStartingRoom = value;}}
-        public bool IsExitRoom { get { return _isStartingRoom; } set { _isStartingRoom = value; } }
+        
+        private bool _isExitRoom;
+        public bool IsExitRoom { get { return _isExitRoom; } set { _isExitRoom = value; } }
 
         public void OpenWall(Vector2Int direction)
         {
@@ -107,7 +108,7 @@ namespace Dungeon
             GameObject lever = Instantiate(_leverPrefab, transform.position, Quaternion.identity);
             lever.transform.parent = transform;
             lever.GetComponent<Puzzle.Lever>().Door = exitDoor;
-            GameManager.Instance.RegisterInteractable(lever.GetComponent<Puzzle.Lever>());
+            // GameManager.Instance.RegisterInteractable(lever.GetComponent<Puzzle.Lever>());
         }
     }
 }
