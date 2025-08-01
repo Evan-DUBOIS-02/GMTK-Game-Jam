@@ -62,21 +62,21 @@ namespace Dungeon
                 Vector3 position = transform.position;
                 position.y += 3.5f;
                 _exitDoor = Instantiate(_doorPrefab, position, Quaternion.identity);
-                exitDoorScript = _exitDoor.AddComponent<Puzzle.ExitDoor>();
+                exitDoorScript = _exitDoor.GetComponent<Puzzle.ExitDoor>();
             }
             else if (!_downWall.activeSelf)
             {
                 Vector3 position = transform.position;
                 position.y -= 2.5f;
                 _exitDoor = Instantiate(_doorPrefab, position, Quaternion.identity);
-                exitDoorScript = _exitDoor.AddComponent<Puzzle.ExitDoor>();
+                exitDoorScript = _exitDoor.GetComponent<Puzzle.ExitDoor>();
             }
             else if (!_leftWall.activeSelf)
             {
                 Vector3 position = transform.position;
                 position.x -= 3f;
                 _exitDoor = Instantiate(_doorPrefab, position, Quaternion.identity);
-                exitDoorScript = _exitDoor.AddComponent<Puzzle.ExitDoor>();
+                exitDoorScript = _exitDoor.GetComponent<Puzzle.ExitDoor>();
                 exitDoorScript.SetSideRenderer(false);
             }
             else if (!_rightWall.activeSelf)
@@ -84,7 +84,7 @@ namespace Dungeon
                 Vector3 position = transform.position;
                 position.x += 3f;
                 _exitDoor = Instantiate(_doorPrefab, position, Quaternion.identity);
-                exitDoorScript = _exitDoor.AddComponent<Puzzle.ExitDoor>();
+                exitDoorScript = _exitDoor.GetComponent<Puzzle.ExitDoor>();
                 exitDoorScript.SetSideRenderer(true);
             }
             _isExitRoom = true;
