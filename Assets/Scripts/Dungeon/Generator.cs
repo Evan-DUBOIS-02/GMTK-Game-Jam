@@ -116,14 +116,12 @@ namespace Dungeon
             foreach(PuzzleType puzzleType in Enum.GetValues(typeof(PuzzleType)))
                 availablePuzzles.Add(puzzleType);
             
-            Debug.Log("==== Puzzle generation ====");
             for (int i = 0; i < Random.Range(1, 3); i++)
             {
                 if (availablePuzzles.Count == 0) break;
                 
                 int randomPuzzleIndex = Random.Range(0, availablePuzzles.Count);
                 bool isGenerated = TryGeneratePuzzle(availablePuzzles[randomPuzzleIndex]);
-                Debug.Log(availablePuzzles[randomPuzzleIndex].ToString());
                 availablePuzzles.RemoveAt(randomPuzzleIndex);
 
                 if (!isGenerated)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game;
 using UnityEngine;
 
 namespace Dungeon
@@ -104,6 +105,7 @@ namespace Dungeon
             GameObject lever = Instantiate(_leverPrefab, transform.position, Quaternion.identity);
             lever.transform.parent = transform;
             lever.GetComponent<Puzzle.Lever>().Door = exitDoor;
+            GameManager.Instance.RegisterInteractable(lever.GetComponent<Puzzle.Lever>());
         }
     }
 }
