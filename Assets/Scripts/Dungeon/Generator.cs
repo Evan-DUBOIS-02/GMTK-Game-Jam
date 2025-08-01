@@ -61,6 +61,7 @@ namespace Dungeon
             // STEP 0: Initialize
             _roomGrid = new int[_gridSizeX, _gridSizeY];
             _roomQueue =  new Queue<Vector2Int>();
+            _hallways = new List<Hallway>();
             _roomCount = 0;
             _generationComplete = false;
             _puzzleGenerator = GetComponent<PuzzleGenerator>();
