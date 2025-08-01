@@ -20,12 +20,14 @@ namespace Puzzle
     {
         private int[,] _roomGrid;  
         private List<Room> _generatedRooms;
+        private List<Hallway> _hallways;
         private Room _exitRoom;
         private Room _startingRoom;
         
-        public void GeneratePuzzle(List<Room> generatedRoom, int[,] roomGrid)
+        public void GeneratePuzzle(List<Room> generatedRoom, List<Hallway> hallways, int[,] roomGrid)
         {
             _generatedRooms = generatedRoom;
+            _hallways = hallways;
             _roomGrid = roomGrid;
             FindStartingAndExitRoom();
             
@@ -72,7 +74,7 @@ namespace Puzzle
             {
                 if (Vector2.Distance(room.RoomIndex, _exitRoom.RoomIndex) > maxDistance && !room.ContainPuzzleElement && !room.IsStartingRoom)
                 {
-                    maxDistance = Vector2.Distance(room.RoomIndex, new Vector2Int(_roomGrid.GetLength(0) / 2, _roomGrid.GetLength(1) / 2));
+                    maxDistance = Vector2.Distance(room.RoomIndex, _exitRoom.RoomIndex);
                     selectedRoom = room;
                 }
             }

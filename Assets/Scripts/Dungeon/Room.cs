@@ -12,10 +12,6 @@ namespace Dungeon
         [SerializeField] private GameObject _rightWall;
         [SerializeField] private GameObject _leftWall;
         
-        [Header("Hallways")]
-        [SerializeField] private GameObject _rightHallways;
-        [SerializeField] private GameObject _downHallways;
-        
         private GameObject _exitDoor;
         
         [Header("Prefabs")]
@@ -39,15 +35,9 @@ namespace Dungeon
             if(direction == Vector2Int.left)
                 _leftWall.SetActive(false);
             else if (direction == Vector2Int.right)
-            {
                 _rightWall.SetActive(false);
-                _rightHallways.SetActive(true);
-            }
             else if (direction == Vector2Int.down)
-            {
                 _downWall.SetActive(false);
-                _downHallways.SetActive(true);
-            }
             else if(direction == Vector2Int.up)
                 _upWall.SetActive(false);
         }
@@ -108,7 +98,8 @@ namespace Dungeon
             GameObject lever = Instantiate(_leverPrefab, transform.position, Quaternion.identity);
             lever.transform.parent = transform;
             lever.GetComponent<Puzzle.Lever>().Door = exitDoor;
-            // GameManager.Instance.RegisterInteractable(lever.GetComponent<Puzzle.Lever>());
+            if(GameManager.Instance != null)
+                GameManager.Instance.RegisterInteractable(lever.GetComponent<Puzzle.Lever>());
         }
     }
 }
