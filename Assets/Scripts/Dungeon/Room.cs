@@ -25,7 +25,16 @@ namespace Dungeon
         public bool ContainPuzzleElement{get{return _containPuzzleElement;}}
 
         private bool _isStartingRoom;
-        public bool IsStartingRoom{get{return _isStartingRoom;} set{_isStartingRoom = value;}}
+
+        public bool IsStartingRoom
+        {
+            get{return _isStartingRoom;}
+            set
+            {
+                _isStartingRoom = value;
+                GetComponentInChildren<AutomaticLight>().EnableLight();
+            }
+        }
         
         private bool _isExitRoom;
         public bool IsExitRoom { get { return _isExitRoom; } set { _isExitRoom = value; } }
