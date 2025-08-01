@@ -4,7 +4,31 @@ namespace Player
 {
     public class PlayerState
     {
-        private Vector3 _position;
-        public Vector3 Position{get{return _position;} set{_position=value;}}
+        // All necessary stuff for a ghost to make same actions
+        public Vector3 Position;
+        public bool IsInteracting;
+        public PlayerType Type;
+        // Animation state
+        // Looking right or left
+        // ...
+
+        // Normal contructor
+        public PlayerState()
+        {
+            this.Position = Vector3.zero;
+            this.IsInteracting = false;
+            this.Type = PlayerType.Engineer;
+        }
+        
+        // Copie constructor
+        public PlayerState(PlayerState other)
+        {
+            if (other != null)
+            {
+                this.Position = other.Position;
+                this.IsInteracting = other.IsInteracting;
+                this.Type = other.Type;
+            }
+        }
     }
 }
