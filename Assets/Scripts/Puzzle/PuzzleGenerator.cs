@@ -18,8 +18,17 @@ namespace Puzzle
 
     public class PuzzleGenerator : MonoBehaviour
     {
+        private int[,] _roomGrid;  
+        private List<Room> _generatedRooms;
+        private Room _exitRoom;
+        private Room _startingRoom;
+        
         public void GeneratePuzzle(List<Room> generatedRoom, int[,] roomGrid)
         {
+            _generatedRooms = generatedRoom;
+            _roomGrid = roomGrid;
+            FindStartingAndExitRoom();
+            
             List<PuzzleType> availablePuzzles = new List<PuzzleType>();
             foreach (PuzzleType puzzleType in Enum.GetValues(typeof(PuzzleType)))
                 availablePuzzles.Add(puzzleType);
@@ -29,7 +38,7 @@ namespace Puzzle
                 if (availablePuzzles.Count == 0) break;
 
                 int randomPuzzleIndex = Random.Range(0, availablePuzzles.Count);
-                bool isGenerated = TryGeneratePuzzle(availablePuzzles[randomPuzzleIndex], generatedRoom, roomGrid);
+                bool isGenerated = TryGeneratePuzzle(availablePuzzles[randomPuzzleIndex]);
                 availablePuzzles.RemoveAt(randomPuzzleIndex);
 
                 if (!isGenerated)
@@ -37,14 +46,14 @@ namespace Puzzle
             }
         }
 
-        public bool TryGeneratePuzzle(PuzzleType type, List<Room> generatedRoom, int[,] roomGrid)
+        public bool TryGeneratePuzzle(PuzzleType type)
         {
-            bool success = false;
+            bool success;
 
             switch (type)
             {
                 case PuzzleType.Lever:
-                    success = TryGenerateLever(generatedRoom, roomGrid);
+                    success = TryGenerateLever();
                     break;
                 default:
                     success = false;
@@ -54,43 +63,39 @@ namespace Puzzle
             return success;
         }
 
-        private bool TryGenerateLever(List<Room> generatedRoom, int[,] roomGrid)
+        private bool TryGenerateLever()
         {
             float maxDistance = float.MinValue;
             Room selectedRoom = null;
-            Room[] startAndExitRoom = GetStartingAndExitRoom(generatedRoom);
-            foreach (Room room in generatedRoom)
+
+            foreach (Room room in _generatedRooms)
             {
-                if (Vector2.Distance(room.RoomIndex, startAndExitRoom[1].RoomIndex) > maxDistance && !room.ContainPuzzleElement && !room.IsStartingRoom)
+                if (Vector2.Distance(room.RoomIndex, _exitRoom.RoomIndex) > maxDistance && !room.ContainPuzzleElement && !room.IsStartingRoom)
                 {
-                    maxDistance = Vector2.Distance(room.RoomIndex, new Vector2Int(roomGrid.GetLength(1) / 2, roomGrid.GetLength(0) / 2));
+                    maxDistance = Vector2.Distance(room.RoomIndex, new Vector2Int(_roomGrid.GetLength(0) / 2, _roomGrid.GetLength(1) / 2));
                     selectedRoom = room;
                 }
             }
 
             if (selectedRoom != null)
             {
-                selectedRoom.ContainLever(startAndExitRoom[1].GetExitDoor());
-                startAndExitRoom[1].GetExitDoor().ManageDoor(false);
+                selectedRoom.ContainLever(_exitRoom.GetExitDoor());
+                _exitRoom.GetExitDoor().ManageDoor(false);
                 return true;
             }
 
             return false;
         }
 
-        private Room[] GetStartingAndExitRoom(List<Room> generatedRoom)
+        private void FindStartingAndExitRoom()
         {
-            Room[] startAndExitRoomList = new Room[2];
-
-            foreach (Room room in generatedRoom)
+            foreach (Room room in _generatedRooms)
             {
                 if (room.IsStartingRoom)
-                    startAndExitRoomList[0] = room;
+                    _startingRoom = room;
                 else if(room.IsExitRoom)
-                    startAndExitRoomList[1] = room;
+                    _exitRoom = room;
             }
-
-            return startAndExitRoomList;
         }
     }
 }

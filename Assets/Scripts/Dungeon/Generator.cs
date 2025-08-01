@@ -26,10 +26,10 @@ namespace Dungeon
         [SerializeField] private int _gridSizeY = 11;       // the overall Y amplitude of the dungeon
         
         private Queue<Vector2Int> _roomQueue;               // Queue of room to try expension
-        public int[,] _roomGrid;                           // In the grid, 0: no room, 1: room at the indicated position
+        private int[,] _roomGrid;                           // In the grid, 0: no room, 1: room at the indicated position
         private int _roomCount;                             // Room counter
         private bool _generationComplete;                   // Catch the end of the generation
-        public List<Room> _generatedRooms;
+        private List<Room> _generatedRooms;
         public Room _exitRoom;
         private PuzzleGenerator _puzzleGenerator;
         
@@ -37,7 +37,6 @@ namespace Dungeon
         {
             // Generate the dungeon
             Generate();
-            _puzzleGenerator = GetComponent<PuzzleGenerator>();
         }
         
         /// <summary>
@@ -61,6 +60,7 @@ namespace Dungeon
             _roomQueue =  new Queue<Vector2Int>();
             _roomCount = 0;
             _generationComplete = false;
+            _puzzleGenerator = GetComponent<PuzzleGenerator>();
             
             // STEP 1: Place the first room at the middle of the grid
             Vector2Int initialRoomIndex = new Vector2Int(_gridSizeX/2, _gridSizeY/2);
