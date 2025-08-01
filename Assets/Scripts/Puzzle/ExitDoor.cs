@@ -5,22 +5,33 @@ namespace Puzzle
 
     public class ExitDoor: MonoBehaviour
     {
+        [SerializeField] private GameObject _frontDoorClosed;
+        [SerializeField] private GameObject _frontDoorOpen;
+        [SerializeField] private GameObject _sideDoorClosed;
+        [SerializeField] private GameObject _sideDoorOpen;
+        
         private bool _isSideDoor = false;
         
         public void ManageDoor(bool open)
         {
-            if(_isSideDoor)
-                transform.GetChild(1).gameObject.SetActive(!open);
+            if (_isSideDoor)
+            {
+                _sideDoorClosed.SetActive(!open);
+                _sideDoorOpen.SetActive(open);
+            }
             else
-                transform.GetChild(0).gameObject.SetActive(!open);
+            {
+                _frontDoorClosed.SetActive(!open);
+                _frontDoorOpen.SetActive(open);
+            }
         }
 
         public void SetSideRenderer(bool isLookingRight)
         {
             _isSideDoor = true;
-            transform.GetChild(0).gameObject.SetActive(false);
-            transform.GetChild(1).gameObject.SetActive(true);
-            transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = isLookingRight;
+            _frontDoorClosed.SetActive(false);
+            _sideDoorClosed.SetActive(true);
+            _sideDoorClosed.GetComponent<SpriteRenderer>().flipX = isLookingRight;
         }
     }
 }
