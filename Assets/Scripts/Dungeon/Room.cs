@@ -29,7 +29,9 @@ namespace Dungeon
         public bool ContainPuzzleElement{get{return _containPuzzleElement;}}
 
         private bool _isStartingRoom = false;
+        private bool _isExitRoom = false;
         public bool IsStartingRoom{get{return _isStartingRoom;} set{_isStartingRoom = value;}}
+        public bool IsExitRoom { get { return _isStartingRoom; } set { _isStartingRoom = value; } }
 
         public void OpenWall(Vector2Int direction)
         {
@@ -85,7 +87,7 @@ namespace Dungeon
                 exitDoorScript = _exitDoor.AddComponent<Puzzle.ExitDoor>();
                 exitDoorScript.SetSideRenderer(true);
             }
-            
+            _isExitRoom = true;
             _exitDoor.transform.SetParent(transform);
             exitDoorScript.ManageDoor(true);
         }

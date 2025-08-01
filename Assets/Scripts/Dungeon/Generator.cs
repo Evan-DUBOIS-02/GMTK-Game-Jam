@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Puzzle;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -6,13 +7,6 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 
-public enum PuzzleType
-{
-    Lever,
-    Void,
-    PressurePlate,
-    BreakableWall
-}
 
 namespace Dungeon
 {
@@ -32,16 +26,18 @@ namespace Dungeon
         [SerializeField] private int _gridSizeY = 11;       // the overall Y amplitude of the dungeon
         
         private Queue<Vector2Int> _roomQueue;               // Queue of room to try expension
-        private int[,] _roomGrid;                           // In the grid, 0: no room, 1: room at the indicated position
+        public int[,] _roomGrid;                           // In the grid, 0: no room, 1: room at the indicated position
         private int _roomCount;                             // Room counter
         private bool _generationComplete;                   // Catch the end of the generation
-        private List<Room> _generatedRooms;
-        private Room _exitRoom;
+        public List<Room> _generatedRooms;
+        public Room _exitRoom;
+        private PuzzleGenerator _puzzleGenerator;
         
         private void Start()
         {
             // Generate the dungeon
             Generate();
+            _puzzleGenerator = GetComponent<PuzzleGenerator>();
         }
         
         /// <summary>
@@ -107,26 +103,10 @@ namespace Dungeon
             
             // STEP 3: Instantiate the rooms
             InstantiateRooms();
-            
-            // STEP 4: Place exit
-            GenerateExit();
-            
-            // STEP 5: Setup random puzzle
-            List<PuzzleType> availablePuzzles = new List<PuzzleType>();
-            foreach(PuzzleType puzzleType in Enum.GetValues(typeof(PuzzleType)))
-                availablePuzzles.Add(puzzleType);
-            
-            for (int i = 0; i < Random.Range(1, 3); i++)
-            {
-                if (availablePuzzles.Count == 0) break;
-                
-                int randomPuzzleIndex = Random.Range(0, availablePuzzles.Count);
-                bool isGenerated = TryGeneratePuzzle(availablePuzzles[randomPuzzleIndex]);
-                availablePuzzles.RemoveAt(randomPuzzleIndex);
 
-                if (!isGenerated)
-                    i--;
-            }
+            GenerateExit();
+
+            _puzzleGenerator.GeneratePuzzle(_generatedRooms, _roomGrid);
         }
         
         #region STEP 1 - 3 (room generation)
@@ -201,69 +181,26 @@ namespace Dungeon
             }
         }
         #endregion
-        
-        #region STEP 4 (puzzle placement)
-        private void GenerateExit()
+
+        public void GenerateExit()
         {
             float maxDistance = float.MinValue;
             _exitRoom = null;
-            
+
             foreach (var room in _generatedRooms)
             {
-                if (Vector2.Distance(room.RoomIndex, new Vector2Int(_gridSizeX/2, _gridSizeY/2)) > maxDistance)
+                if (Vector2.Distance(room.RoomIndex, new Vector2Int(_gridSizeX / 2, _gridSizeY / 2)) > maxDistance)
                 {
-                    maxDistance = Vector2.Distance(room.RoomIndex, new Vector2Int(_gridSizeX/2, _gridSizeY/2));
+                    maxDistance = Vector2.Distance(room.RoomIndex, new Vector2Int(_gridSizeX / 2, _gridSizeY / 2));
                     _exitRoom = room;
                 }
             }
+           
             _exitRoom.SetAsExitRoom();
         }
 
-        private bool TryGeneratePuzzle(PuzzleType type)
-        {
-            bool success = false;
-            
-            switch (type)
-            {
-                case PuzzleType.Lever:
-                    success = TryGenerateLever();
-                    break;
-                default:
-                    success = false;
-                    break;
-            }
-            
-            return success;
-        }
-
-        private bool TryGenerateLever()
-        {
-            float maxDistance = float.MinValue;
-            Room selectedRoom = null;
-            
-            foreach (Room room in _generatedRooms)
-            {
-                if (Vector2.Distance(room.RoomIndex, _exitRoom.RoomIndex) > maxDistance && !room.ContainPuzzleElement && !room.IsStartingRoom)
-                {
-                    maxDistance = Vector2.Distance(room.RoomIndex, new Vector2Int(_gridSizeX/2, _gridSizeY/2));
-                    selectedRoom = room;
-                }
-            }
-
-            if (selectedRoom != null)
-            {
-                selectedRoom.ContainLever(_exitRoom.GetExitDoor());
-                _exitRoom.GetExitDoor().ManageDoor(false);
-                return true;
-            }
-            
-            return false;
-        }
-        
-        #endregion
-
         #region TOOLS
-        
+
         /// <summary>
         /// Used to return the current number of existing rooms adjacent at the given positions
         /// </summary>
