@@ -6083,6 +6083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &130077646
 GameObject:
   m_ObjectHideFlags: 0
@@ -9611,6 +9612,7 @@ MonoBehaviour:
   - {fileID: 2119290246}
   - {fileID: 374367791}
   - {fileID: 1071730157}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &191448275
 GameObject:
   m_ObjectHideFlags: 0
@@ -31151,6 +31153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &613965293
 GameObject:
   m_ObjectHideFlags: 0
@@ -34454,6 +34457,7 @@ MonoBehaviour:
   - {fileID: 1539049980}
   - {fileID: 2013696671}
   - {fileID: 623968944}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &671936115
 GameObject:
   m_ObjectHideFlags: 0
@@ -34624,6 +34628,7 @@ MonoBehaviour:
   - {fileID: 739707025}
   - {fileID: 1743774872}
   - {fileID: 950505508}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &674799270
 GameObject:
   m_ObjectHideFlags: 0
@@ -37807,6 +37812,7 @@ MonoBehaviour:
   - {fileID: 617721423}
   - {fileID: 1552002012}
   - {fileID: 649951547}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &724476803
 GameObject:
   m_ObjectHideFlags: 0
@@ -43153,6 +43159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &816588043
 GameObject:
   m_ObjectHideFlags: 0
@@ -51259,6 +51266,7 @@ MonoBehaviour:
   - {fileID: 2101983098}
   - {fileID: 2098894257}
   - {fileID: 1719317836}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &981812321
 GameObject:
   m_ObjectHideFlags: 0
@@ -54141,6 +54149,7 @@ MonoBehaviour:
   - {fileID: 1880350529}
   - {fileID: 1802078506}
   - {fileID: 194697707}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &1028705049
 GameObject:
   m_ObjectHideFlags: 0
@@ -55493,6 +55502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1062632044
 GameObject:
   m_ObjectHideFlags: 0
@@ -55626,6 +55636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1068043407
 GameObject:
   m_ObjectHideFlags: 0
@@ -60091,6 +60102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1162991376
 GameObject:
   m_ObjectHideFlags: 0
@@ -67368,6 +67380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1288706271
 GameObject:
   m_ObjectHideFlags: 0
@@ -67784,6 +67797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1293854090
 GameObject:
   m_ObjectHideFlags: 0
@@ -68258,6 +68272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1316867644
 GameObject:
   m_ObjectHideFlags: 0
@@ -68689,6 +68704,7 @@ MonoBehaviour:
   - {fileID: 1512872012}
   - {fileID: 1876321881}
   - {fileID: 1014825874}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &1329250933
 GameObject:
   m_ObjectHideFlags: 0
@@ -68910,6 +68926,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1334113657
 GameObject:
   m_ObjectHideFlags: 0
@@ -70901,6 +70918,7 @@ MonoBehaviour:
   - {fileID: 1665446962}
   - {fileID: 1359358338}
   - {fileID: 1742970141}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &1363842881
 GameObject:
   m_ObjectHideFlags: 0
@@ -71159,6 +71177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1369670068
 GameObject:
   m_ObjectHideFlags: 0
@@ -85153,6 +85172,7 @@ MonoBehaviour:
   - {fileID: 577306844}
   - {fileID: 1141992435}
   - {fileID: 309386990}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &1675814572
 GameObject:
   m_ObjectHideFlags: 0
@@ -85802,6 +85822,7 @@ MonoBehaviour:
   - {fileID: 1337271516}
   - {fileID: 1602471169}
   - {fileID: 762134920}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &1683644811
 GameObject:
   m_ObjectHideFlags: 0
@@ -86730,6 +86751,7 @@ MonoBehaviour:
   - {fileID: 1215745310}
   - {fileID: 803771423}
   - {fileID: 615675542}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &1698802588
 GameObject:
   m_ObjectHideFlags: 0
@@ -91787,6 +91809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1806744435
 GameObject:
   m_ObjectHideFlags: 0
@@ -94654,6 +94677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1851543884
 GameObject:
   m_ObjectHideFlags: 0
@@ -94955,6 +94979,7 @@ MonoBehaviour:
   - {fileID: 334532472}
   - {fileID: 858604628}
   - {fileID: 645223133}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &1860302416
 GameObject:
   m_ObjectHideFlags: 0
@@ -97601,7 +97626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1902764667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104124,6 +104149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &2030061927
 GameObject:
   m_ObjectHideFlags: 0
@@ -107196,6 +107222,7 @@ MonoBehaviour:
   - {fileID: 341970411}
   - {fileID: 292056009}
   - {fileID: 1559023671}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &2101983098
 GameObject:
   m_ObjectHideFlags: 0
@@ -108727,6 +108754,7 @@ MonoBehaviour:
   - {fileID: 108404633}
   - {fileID: 1740954569}
   - {fileID: 185143980}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &2125712826
 GameObject:
   m_ObjectHideFlags: 0
@@ -110072,6 +110100,7 @@ MonoBehaviour:
   - {fileID: 1578059790}
   - {fileID: 907220975}
   - {fileID: 1101641249}
+  _bombPrefab: {fileID: 0}
 --- !u!1 &2146412496
 GameObject:
   m_ObjectHideFlags: 0

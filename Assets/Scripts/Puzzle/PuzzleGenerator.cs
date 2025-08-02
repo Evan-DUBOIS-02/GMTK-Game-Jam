@@ -244,11 +244,11 @@ namespace Puzzle
                             new List<Room>()))
                     {
                         generatedRoomsTmp.Remove(solutionRoom);
-                        isValid = false;
                     }
                     // Cross puzzle case
                     else
                     {
+                        isValid = true;
                         foreach (var elem in _solutionToObstacle)
                         {
                             startingRooms = new Queue<Room>();
@@ -260,8 +260,6 @@ namespace Puzzle
                                 isValid = false;
                             }
                         }
-
-                        isValid = true;
                     }
                 }
             }
@@ -272,6 +270,9 @@ namespace Puzzle
             {
                 case PuzzleType.Lever:
                     GenerateLeverPuzzle(hallwayObstacle, solutionRoom);
+                    break;
+                case PuzzleType.BreakableWall:
+                    GenerateBreakableWallPuzzle(hallwayObstacle, solutionRoom);
                     break;
             }
             return true;
@@ -300,6 +301,12 @@ namespace Puzzle
         {
             Door generatedDoor = hallwayObstacle.GenerateDoor();
             room.ContainLever(generatedDoor);
+        }
+        
+        private void GenerateBreakableWallPuzzle(Hallway hallwayObstacle, Room room)
+        {
+            BreakableWall breakableWall = hallwayObstacle.GenerateBreakableWall();
+            room.ContainBomb();
         }
 
         private void FindStartingAndExitRoom()
