@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      runeBlack_rectangleOutline_031_0: -1341922116635053254
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

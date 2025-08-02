@@ -1241,8 +1241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 0}
-  _room2: {fileID: 0}
+  _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
 --- !u!1 &8404492971593050302
 GameObject:
   m_ObjectHideFlags: 0
