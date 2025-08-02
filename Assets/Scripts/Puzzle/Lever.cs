@@ -8,8 +8,8 @@ namespace Puzzle
         [SerializeField] private GameObject _leverOn;
         [SerializeField] private GameObject _leverOff;
         
-        private ExitDoor _door;
-        public ExitDoor Door{get{return _door;} set{_door = value;}}
+        private Door _door;
+        public Door Door{get{return _door;} set{_door = value;}}
         
         private bool _isActive;
 
@@ -22,15 +22,10 @@ namespace Puzzle
 
         public bool TryInteract(Player.PlayerState state)
         {
-            if (state.Type == PlayerType.Engineer)
-            {
-                _isActive = !_isActive;
-                SwitchSprite();
-                _door.ManageDoor(_isActive);
-                return true;
-            }
-
-            return false;
+            _isActive = !_isActive; 
+            SwitchSprite();
+            _door.ManageDoor(_isActive);
+            return true;
         }
 
         private void SwitchSprite()

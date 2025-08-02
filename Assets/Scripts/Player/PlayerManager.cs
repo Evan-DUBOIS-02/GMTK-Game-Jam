@@ -1,21 +1,12 @@
-﻿using System;
-using Game;
+﻿using Game;
 using Puzzle;
-using Unity.VisualScripting;
 using UnityEngine;
-
-public enum PlayerType
-{
-    None,
-    Engineer
-}
 
 namespace Player
 {
     public class PlayerManager: MonoBehaviour
     {
         private Interactable _currentInteractable;
-        private PlayerTypeSelector _playerTypeSelector;
         private PlayerState _currentState;
 
         private void Start()
@@ -36,11 +27,6 @@ namespace Player
                         GameManager.Instance.StopLoop();
                     }
                 }
-                else if (_playerTypeSelector != null)
-                {
-                    _currentState.Type = _playerTypeSelector.PlayerTypeToApply;
-                    Debug.Log("Type applied: "+_currentState.Type);
-                }
             }
         }
 
@@ -58,13 +44,6 @@ namespace Player
                 _currentInteractable = interactable;
                 return;
             }
-
-            PlayerTypeSelector selector;
-            if (other.TryGetComponent(out selector))
-            {
-                _playerTypeSelector = selector;
-                return;
-            }
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -74,10 +53,6 @@ namespace Player
             {
                 _currentInteractable = null;
             }
-
-            PlayerTypeSelector selector;
-            if(other.TryGetComponent(out selector))
-                _playerTypeSelector = null;
         }
     }
 }
