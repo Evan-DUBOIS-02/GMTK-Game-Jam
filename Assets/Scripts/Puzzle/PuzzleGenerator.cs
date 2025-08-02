@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine.Rendering;
 
 public enum PuzzleType
 {
@@ -79,7 +80,10 @@ namespace Puzzle
             {
                 for (int j = 0; j < repartition[i]; j++)
                 {
-                    totalRuneBag.Add(_selectedRuneSprites[i]);
+                    if(i != 4)
+                        totalRuneBag.Add(_selectedRuneSprites[i]);
+                    else
+                        totalRuneBag.Add(_blankRune);
                 }
             }
 
