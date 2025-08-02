@@ -9,11 +9,17 @@ namespace Player
         private Rigidbody2D _rb;
         private Vector2 _movement;
         private Vector3 _startPosition;
+        private Vector2 _lastPosition;
+        private bool _isFacingRight = true;
+        Animator _animator;
+        [SerializeField]
+        GameObject _rendererGO;
 
         private void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
             _startPosition = transform.position;
+            _animator = GetComponentInChildren<Animator>();
         }
 
         private void Update()
@@ -21,12 +27,19 @@ namespace Player
             _movement.x = Input.GetAxisRaw("Horizontal");
             _movement.y = Input.GetAxisRaw("Vertical");
             _movement.Normalize();
+
+            FlipSprite();
         }
 
         private void FixedUpdate()
         {
             Vector2 newPosition = _rb.position + _movement * _moveSpeed * Time.fixedDeltaTime;
             _rb.MovePosition(newPosition);
+
+            Vector2 velocity = (newPosition - _lastPosition) / Time.fixedDeltaTime;
+            _lastPosition = newPosition;
+
+            _animator.SetFloat("xVelocity", Mathf.Abs(velocity.x));
         }
 
         public void InitializePosition()
@@ -37,6 +50,17 @@ namespace Player
         public bool IsMoving()
         {
             return _movement != Vector2.zero;
+        }
+
+        private void FlipSprite()
+        {
+            if (_isFacingRight && _movement.x < 0f || !_isFacingRight && _movement.x > 0f) 
+            {
+                _isFacingRight = !_isFacingRight;
+                Vector3 ls = _rendererGO.transform.localScale;
+                ls.x *= -1f;
+                _rendererGO.transform.localScale = ls;
+            }
         }
     }
 }
