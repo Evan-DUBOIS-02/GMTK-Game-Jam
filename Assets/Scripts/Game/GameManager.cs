@@ -21,8 +21,6 @@ namespace Game
         // Puzzle elements to reset at each loop
         List<Interactable> _interactables;
         
-        [SerializeField] private GameObject _playerTypeSelector;
-        
         private void Awake()
         {
             // Generate unique instance
@@ -60,8 +58,6 @@ namespace Game
                 interactable.SetToDefaultState();
             // Stop the current loop
             _isLoopStarted = false;
-            // Show player type selector
-            _playerTypeSelector.SetActive(true);
         }
         
         // Called by the puzzle generator to register the interactable/puzzle
@@ -80,8 +76,6 @@ namespace Game
                 GhostManager.Instance.StartRecording();
                 // Start the loop
                 _isLoopStarted = true;
-                // Hide player type selector
-                _playerTypeSelector.SetActive(false);
             }
         }
     }

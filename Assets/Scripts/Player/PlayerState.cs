@@ -7,7 +7,6 @@ namespace Player
         // All necessary stuff for a ghost to make same actions
         public Vector3 Position;
         public bool IsInteracting;
-        public PlayerType Type;
         // Animation state
         // Looking right or left
         // ...
@@ -17,7 +16,6 @@ namespace Player
         {
             this.Position = Vector3.zero;
             this.IsInteracting = false;
-            this.Type = PlayerType.Engineer;
         }
         
         // Copie constructor
@@ -27,7 +25,6 @@ namespace Player
             {
                 this.Position = other.Position;
                 this.IsInteracting = other.IsInteracting;
-                this.Type = other.Type;
             }
         }
     }
