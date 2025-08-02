@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game;
+using Puzzle;
 using UnityEngine;
 
 namespace Dungeon
@@ -14,36 +16,35 @@ namespace Dungeon
         [SerializeField] private GameObject _leftWall;
         
         private GameObject _exitDoor;
+        public Door ExitDoor{get{return _exitDoor.GetComponent<Door>();}}
         
         [Header("Prefabs")]
         [SerializeField] private GameObject _doorPrefab;
         [SerializeField] private GameObject _leverPrefab;
+        
+        [Header("Solution room slabs")]
+        [SerializeField] private List<GameObject> _solutionRoomSlabs;
+        
+        [Header("Hint room tiles")]
+        [SerializeField] private List<GameObject> _topHintRoomTiles;
+        [SerializeField] private List<GameObject> _rightHintRoomTiles;
+        [SerializeField] private List<GameObject> _botHintRoomTiles;
+        [SerializeField] private List<GameObject> _leftHintRoomTiles;
 
         private Vector2Int _roomIndex;
         public Vector2Int RoomIndex{get{return _roomIndex;} set{_roomIndex = value;}}
 
         private bool _containPuzzleElement;
         public bool ContainPuzzleElement{get{return _containPuzzleElement;}}
-
-        private bool _isStartingRoom;
-
-        public bool IsStartingRoom
-        {
-            get{return _isStartingRoom;}
-            set
-            {
-                _isStartingRoom = value;
-                GetComponentInChildren<AutomaticLight>().EnableLight();
-            }
-        }
         
-        private bool _isExitRoom;
-        public bool IsExitRoom { get { return _isExitRoom; } set { _isExitRoom = value; } }
+        [NonSerialized] public bool IsStartingRoom;
+        [NonSerialized] public bool IsExitRoom;
+        [NonSerialized] public bool IsSolutionRoom;
 
         private int _numberOfAdjacentRoom = 0;
         public int NumberOfAdjacentRoom{get{return _numberOfAdjacentRoom;}}
         
-        [NonSerialized] public List<Hallway> ConnectedHallways = new List<Hallway>();
+        [NonSerialized] public List<Hallway> ConnectedHallways;
 
         public void OpenWall(Vector2Int direction)
         {
@@ -101,8 +102,42 @@ namespace Dungeon
                 doorScript = _exitDoor.GetComponent<Puzzle.Door>();
                 doorScript.SetSideRenderer(true);
             }
-            _isExitRoom = true;
+            IsExitRoom = true;
             _exitDoor.transform.SetParent(transform);
+        }
+
+        public void SetAsSolutionRoom(Dictionary<Sprite, int> sprites, Door door)
+        {
+            for (int i = 0; i < _solutionRoomSlabs.Count; i++)
+            {
+                _solutionRoomSlabs[i].GetComponent<SpriteRenderer>().sprite = sprites.ElementAt(i).Key;
+                _solutionRoomSlabs[i].GetComponent<RuneSlabs>().SetCount(sprites.ElementAt(i).Value);
+            }
+            _solutionRoomSlabs[0].transform.parent.gameObject.SetActive(true);
+            _solutionRoomSlabs[0]?.transform.parent.GetComponent<RuneCodeManager>().SetExitDoor(door);
+            IsSolutionRoom = true;
+        }
+
+        public void SetAsHintRoom(List<Sprite> sprites)
+        {
+            // Can place runes at the top ?
+            if(_upWall.activeSelf)
+                ApplySpriteOnGameObject(sprites, _topHintRoomTiles);
+            else if(_downWall.activeSelf)
+                ApplySpriteOnGameObject(sprites, _botHintRoomTiles);
+            else if(_rightWall.activeSelf)
+                ApplySpriteOnGameObject(sprites, _rightHintRoomTiles);
+            else if(_leftWall.activeSelf)
+                ApplySpriteOnGameObject(sprites, _leftHintRoomTiles);
+        }
+
+        private void ApplySpriteOnGameObject(List<Sprite> sprites, List<GameObject> gameObjects)
+        {
+            for (int i = 0; i < gameObjects.Count; i++)
+            {
+                gameObjects[i].GetComponent<SpriteRenderer>().sprite = sprites[i];
+            }
+            gameObjects[0].transform.parent.gameObject.SetActive(true);
         }
 
         public void ContainLever(Puzzle.Door door)

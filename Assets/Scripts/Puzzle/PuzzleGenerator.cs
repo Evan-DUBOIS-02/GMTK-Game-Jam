@@ -61,16 +61,16 @@ namespace Puzzle
 
         private void GenerateMainPuzzle()
         {
-            // Select 4 random runes
-            List<Sprite> _selectedRuneSprites = new List<Sprite>();
+            // Select 4 random runes sprites
+            List<Sprite> selectedRuneSprites = new List<Sprite>();
             for (int i = 0; i < 4; i++)
             {
                 Sprite randomSprite = _availableRuneSprites[Random.Range(0, _availableRuneSprites.Count)];
-                while (_selectedRuneSprites.Contains(randomSprite))
+                while (selectedRuneSprites.Contains(randomSprite))
                 {
                     randomSprite = _availableRuneSprites[Random.Range(0, _availableRuneSprites.Count)];
                 }
-                _selectedRuneSprites.Add(randomSprite);
+                selectedRuneSprites.Add(randomSprite);
             }
             
             // Find correct repartition
@@ -81,15 +81,77 @@ namespace Puzzle
                 for (int j = 0; j < repartition[i]; j++)
                 {
                     if(i != 4)
-                        totalRuneBag.Add(_selectedRuneSprites[i]);
+                        totalRuneBag.Add(selectedRuneSprites[i]);
                     else
                         totalRuneBag.Add(_blankRune);
                 }
             }
 
-            foreach (var rune in totalRuneBag)
+            Dictionary<Sprite, int> spriteToQuantity = new Dictionary<Sprite, int>()
             {
-                Debug.Log(rune);
+                { selectedRuneSprites[0], repartition[0] },
+                { selectedRuneSprites[1], repartition[1] },
+                { selectedRuneSprites[2], repartition[2] },
+                { selectedRuneSprites[3], repartition[3] }
+            };
+
+            // Find solution room
+            List<Room> isolatedRoomTmp = new List<Room>(_isolatedRoom);
+            isolatedRoomTmp.Remove(_exitRoom);
+            isolatedRoomTmp.Remove(_startingRoom);
+            
+            Room solutionRoom =  null;
+            float minDistance = float.MaxValue;
+            
+            for (int i = 0; i < isolatedRoomTmp.Count; i++)
+            {
+                float currentDistance = Vector2.Distance(isolatedRoomTmp[i].RoomIndex, _exitRoom.RoomIndex);
+                if (currentDistance <= minDistance)
+                {
+                    minDistance = currentDistance;
+                    solutionRoom = isolatedRoomTmp[i];
+                }
+            }
+
+            isolatedRoomTmp.Remove(solutionRoom);
+            solutionRoom.SetAsSolutionRoom(spriteToQuantity, _exitRoom.ExitDoor);
+            
+            // Find hint rooms
+            int numberOfRoom = totalRuneBag.Count/4;
+            
+            // If to much rooms, remove random
+            while (isolatedRoomTmp.Count > numberOfRoom)
+            {
+                isolatedRoomTmp.RemoveAt(Random.Range(0, isolatedRoomTmp.Count));
+            }
+
+            // If not enough rooms, add randoms
+            while (isolatedRoomTmp.Count < numberOfRoom)
+            {
+                Room randomRoom = _generatedRooms[Random.Range(0, _generatedRooms.Count)];
+                while (isolatedRoomTmp.Contains(randomRoom) || randomRoom.IsExitRoom || randomRoom.IsStartingRoom ||
+                       randomRoom.IsSolutionRoom)
+                {
+                    randomRoom = _generatedRooms[Random.Range(0, _generatedRooms.Count)];
+                }
+
+                isolatedRoomTmp.Add(randomRoom);
+            }
+
+            foreach (Room room in isolatedRoomTmp)
+            {
+                List<Sprite> selectedSpriteForThisRoom = new List<Sprite>();
+                
+                // Get random 4 available runes
+                for (int i = 0; i < 4; i++)
+                {
+                    int randomIndex = Random.Range(0, totalRuneBag.Count);
+                    Sprite randomSprite = totalRuneBag[randomIndex];
+                    totalRuneBag.RemoveAt(randomIndex);
+                    selectedSpriteForThisRoom.Add(randomSprite);
+                }
+
+                room.SetAsHintRoom(selectedSpriteForThisRoom);
             }
         }
 
@@ -160,7 +222,7 @@ namespace Puzzle
                 Room room = _generatedRooms[Random.Range(0, _generatedRooms.Count)];
                 Queue<Room> rooms = new Queue<Room>();
                 rooms.Enqueue(_startingRoom);
-                if (room != _exitRoom && room!= _startingRoom && ExistPath(rooms, new List<Room>(), room))
+                if (room != _exitRoom && room!= _startingRoom  && !room.IsSolutionRoom && ExistPath(rooms, new List<Room>(), room))
                 {
                     room.ContainLever(generatedDoor);
                     isLeverPlaced = true;
