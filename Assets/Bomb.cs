@@ -28,9 +28,11 @@ namespace Puzzle
             if (_isExploding && collision.GetComponent<BreakableWall>())
             {
                 collision.gameObject.GetComponent<BreakableWall>().IsDestroyed();
+                rendererBomb.SetActive(false);
             }
             if(_isExploding && collision.CompareTag("Player"))
             {
+                rendererBomb.SetActive(false);
                 Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {

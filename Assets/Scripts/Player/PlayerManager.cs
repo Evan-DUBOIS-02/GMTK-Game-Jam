@@ -11,7 +11,6 @@ namespace Player
         private PlayerState _currentState;
         private Bomb _bomb;
         [SerializeField]
-        private float _timeUntilExplosion;
         private bool _bombIsTriggered;
         private bool _isHoldinge;
 
@@ -32,7 +31,6 @@ namespace Player
 
                 if (_currentInteractable != null)
                 {
-                    Debug.Log(_currentInteractable.Interact(_currentState));
                     if (_currentInteractable.Interact(_currentState) == 1)
                     {
                         _currentState.IsInteracting = true;
@@ -48,27 +46,17 @@ namespace Player
                 }
                 else if(_currentState.IsHoldingBomb == true)
                 {
-                    Debug.Log("Depose la bombe");
                     _currentState.IsHoldingBomb = false;
                     _bomb.transform.position = this.transform.position;
                     _bomb.rendererBomb.SetActive(true);
-                    _timeUntilExplosion -= Time.deltaTime;
+                    GhostManager.Instance.ForceRecord();
+                    GameManager.Instance.StopLoop();
+                    _bomb._isExploding = true;
                 }
             }
 
             else
                 _isHoldinge = false;
-            if(_currentState.IsHoldingBomb)
-            {
-                Debug.Log("Possede la bombe + temps restants : " + _timeUntilExplosion);
-                _timeUntilExplosion -= Time.deltaTime;
-                if (_timeUntilExplosion <= 0)
-                {
-                    _currentState.IsHoldingBomb = false;
-                    _bomb._isExploding = true;
-                }
-            }
-
         }
 
         public PlayerState GetPlayerState()
