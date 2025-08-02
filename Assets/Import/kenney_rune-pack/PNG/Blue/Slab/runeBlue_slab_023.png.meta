@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      runeBlue_slab_023_0: -2706224669129008238
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

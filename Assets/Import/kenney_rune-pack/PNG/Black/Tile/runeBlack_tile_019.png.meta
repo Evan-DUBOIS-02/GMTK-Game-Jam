@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      runeBlack_tile_019_0: -4427951837194699349
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

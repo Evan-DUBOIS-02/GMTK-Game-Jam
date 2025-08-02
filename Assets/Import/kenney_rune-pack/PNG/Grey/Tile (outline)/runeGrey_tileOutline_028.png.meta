@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      runeGrey_tileOutline_028_0: 8016733629285240118
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

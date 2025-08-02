@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      runeGrey_slab_031_0: -5667270010837545701
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
