@@ -78,5 +78,20 @@ namespace Game
                 _isLoopStarted = true;
             }
         }
+
+        public void OnRetryClicked()
+        {
+            Debug.Log("RetryClicked");
+        }
+
+        public void OnNextClicked()
+        {
+            Debug.Log("NextClicked");
+        }
+
+        public void OnMenuClicked()
+        {
+            Debug.Log("MenuClicked");
+        }
     }
 }

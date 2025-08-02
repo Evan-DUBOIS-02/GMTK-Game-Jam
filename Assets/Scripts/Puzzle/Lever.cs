@@ -22,7 +22,7 @@ namespace Puzzle
 
         public int Interact(Player.PlayerState state)
         {
-            _isActive = true; 
+            _isActive = true;
             SwitchSprite();
             _door.ManageDoor(_isActive);
             return 1;
