@@ -1339,8 +1339,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 248974408}
-  _room2: {fileID: 1551524566}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &38132468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3126,8 +3126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 1906184582}
-  _room2: {fileID: 1623473198}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &105546690
 GameObject:
   m_ObjectHideFlags: 0
@@ -4103,7 +4103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 319774342}
-  _playerTypeSelector: {fileID: 0}
 --- !u!4 &156316531
 Transform:
   m_ObjectHideFlags: 0
@@ -4425,8 +4424,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 1985796679}
-  _room2: {fileID: 1823636474}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &172979254
 GameObject:
   m_ObjectHideFlags: 0
@@ -5860,8 +5859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 769831579}
-  _room2: {fileID: 499163586}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &231642765
 GameObject:
   m_ObjectHideFlags: 0
@@ -6669,6 +6668,12 @@ MonoBehaviour:
   _leftWall: {fileID: 881670206}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &248974409
 Transform:
   m_ObjectHideFlags: 0
@@ -9782,8 +9787,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 1906184582}
-  _room2: {fileID: 248974408}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &364388390
 GameObject:
   m_ObjectHideFlags: 0
@@ -10214,8 +10219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 413451146}
-  _room2: {fileID: 1906184582}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &375645321
 GameObject:
   m_ObjectHideFlags: 0
@@ -11159,6 +11164,12 @@ MonoBehaviour:
   _leftWall: {fileID: 1304065096}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &413451147
 Transform:
   m_ObjectHideFlags: 0
@@ -14221,6 +14232,12 @@ MonoBehaviour:
   _leftWall: {fileID: 242855055}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &499163587
 Transform:
   m_ObjectHideFlags: 0
@@ -18088,6 +18105,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024c7886b4308ed4c91dfddb84e2a2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _availableRuneSprites:
+  - {fileID: 21300000, guid: 60f36487765a3904782821f42762e43e, type: 3}
+  - {fileID: 21300000, guid: ce629bc22bb2d3942a6a51020caf4808, type: 3}
+  - {fileID: 21300000, guid: 37fdc632f3342d54381d3597027674e9, type: 3}
+  - {fileID: 21300000, guid: 0d7254c566479cf4fb25134f92d67983, type: 3}
+  - {fileID: 21300000, guid: 3fc8489efe1f7644a90c7c79d51c324f, type: 3}
+  - {fileID: 21300000, guid: 23daaccf54cf56f4e9bc04a437a14b88, type: 3}
+  - {fileID: 21300000, guid: 2c2755df5244f154e810b2db379c004e, type: 3}
+  - {fileID: 21300000, guid: e77c07fbfe638b24eb877d4d4675e8af, type: 3}
+  - {fileID: 21300000, guid: 162a6d4edd240d74488014e03fe5e5b8, type: 3}
+  - {fileID: 21300000, guid: 499c7d52a24dd9948a67368172a59f2a, type: 3}
+  - {fileID: 21300000, guid: 69119d9e78af2a341a497fe57ccbe8b9, type: 3}
+  - {fileID: 21300000, guid: 24902ab7cc465074da651534437c68e8, type: 3}
+  - {fileID: 21300000, guid: 7b117546550d47f49a6cc0ee382c36df, type: 3}
+  - {fileID: 21300000, guid: 039257bb1d375fd4fadbfe86452a371a, type: 3}
+  - {fileID: 21300000, guid: 7d11b88207e20324ba630b89ace4fef3, type: 3}
+  - {fileID: 21300000, guid: 3636ea68f341848479b9b23ded53174b, type: 3}
+  - {fileID: 21300000, guid: b02ce79faa13dca45b120bc96fa25d5d, type: 3}
+  - {fileID: 21300000, guid: 34aa3d45a89f6b345830cadb98ed40af, type: 3}
+  - {fileID: 21300000, guid: 53c75c7bd13417d40993580d33e9dec4, type: 3}
+  - {fileID: 21300000, guid: 7ae38ba5c1c60e846a0ca43792331ff3, type: 3}
+  - {fileID: 21300000, guid: 846658f5250c5fa41b814b333b70e471, type: 3}
+  - {fileID: 21300000, guid: fa9b041825312994eacfc006b10f17fd, type: 3}
+  - {fileID: 21300000, guid: bac6cc7483e98064b8fc3a1565cb9f3e, type: 3}
+  - {fileID: 21300000, guid: 44897d5f35b56334cb3fdc178aa83d8f, type: 3}
+  - {fileID: 21300000, guid: aa18a572470743547a7a8200e6feb1ca, type: 3}
+  - {fileID: 21300000, guid: 1552a1a1a692984419a4d4651ea1fc4b, type: 3}
+  - {fileID: 21300000, guid: 85d0f0aa7ce8d6d46a69a693911ad688, type: 3}
+  - {fileID: 21300000, guid: 847ded376b7930c449ed4d6526fd9a02, type: 3}
+  - {fileID: 21300000, guid: baae7c482ab6193498e2e3c9c96ae9e1, type: 3}
+  - {fileID: 21300000, guid: ecba1fbba32ac834abea752919e69c38, type: 3}
+  - {fileID: 21300000, guid: 4fed8fd14e5c88246870d86ed53acb77, type: 3}
+  - {fileID: 21300000, guid: f36080a6c58551443b679047a6dd99ed, type: 3}
+  - {fileID: 21300000, guid: 232143827aefe0f49be041f7467611d1, type: 3}
+  - {fileID: 21300000, guid: 9dd687f3b4aa3a947879532fe2e3131b, type: 3}
+  - {fileID: 21300000, guid: a9e59293f780fbf48990cbd275e374cb, type: 3}
+  _blankRune: {fileID: 21300000, guid: bd4a00f8bd99eb6418d274e56f1bd973, type: 3}
 --- !u!1 &636427868
 GameObject:
   m_ObjectHideFlags: 0
@@ -18774,6 +18828,12 @@ MonoBehaviour:
   _leftWall: {fileID: 2046399420}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &653139945
 Transform:
   m_ObjectHideFlags: 0
@@ -22048,8 +22108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 1243714831}
-  _room2: {fileID: 1890228195}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &765490778
 GameObject:
   m_ObjectHideFlags: 0
@@ -22428,6 +22488,12 @@ MonoBehaviour:
   _leftWall: {fileID: 1220576978}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &769831580
 Transform:
   m_ObjectHideFlags: 0
@@ -28326,8 +28392,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 2024699238}
-  _room2: {fileID: 1330818053}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &983311092
 GameObject:
   m_ObjectHideFlags: 0
@@ -28805,8 +28871,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 499163586}
-  _room2: {fileID: 1330818053}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1011867063
 GameObject:
   m_ObjectHideFlags: 0
@@ -29240,8 +29306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 1890228195}
-  _room2: {fileID: 653139944}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1023045018
 GameObject:
   m_ObjectHideFlags: 0
@@ -36057,6 +36123,12 @@ MonoBehaviour:
   _leftWall: {fileID: 690660814}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &1243714832
 Transform:
   m_ObjectHideFlags: 0
@@ -38187,6 +38259,12 @@ MonoBehaviour:
   _leftWall: {fileID: 1826516776}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &1330818054
 Transform:
   m_ObjectHideFlags: 0
@@ -43673,8 +43751,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 1985796679}
-  _room2: {fileID: 1890228195}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1493830207
 GameObject:
   m_ObjectHideFlags: 0
@@ -45861,6 +45939,12 @@ MonoBehaviour:
   _leftWall: {fileID: 362154736}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &1551524567
 Transform:
   m_ObjectHideFlags: 0
@@ -48688,6 +48772,12 @@ MonoBehaviour:
   _leftWall: {fileID: 1095763188}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &1623473199
 Transform:
   m_ObjectHideFlags: 0
@@ -49101,8 +49191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 653139944}
-  _room2: {fileID: 1551524566}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1650890803
 GameObject:
   m_ObjectHideFlags: 0
@@ -54385,6 +54475,12 @@ MonoBehaviour:
   _leftWall: {fileID: 1602013335}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &1823636475
 Transform:
   m_ObjectHideFlags: 0
@@ -56688,6 +56784,12 @@ MonoBehaviour:
   _leftWall: {fileID: 1410072957}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &1890228196
 Transform:
   m_ObjectHideFlags: 0
@@ -57598,6 +57700,12 @@ MonoBehaviour:
   _leftWall: {fileID: 1307185384}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &1906184583
 Transform:
   m_ObjectHideFlags: 0
@@ -60270,8 +60378,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542fa73386804005a4d79eef1bea858a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _room1: {fileID: 1551524566}
-  _room2: {fileID: 769831579}
+  _doorPrefab: {fileID: 0}
+  _breakableWallPrefab: {fileID: 0}
 --- !u!1 &1973346718
 GameObject:
   m_ObjectHideFlags: 0
@@ -60568,6 +60676,12 @@ MonoBehaviour:
   _leftWall: {fileID: 1188713168}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &1985796680
 Transform:
   m_ObjectHideFlags: 0
@@ -62103,6 +62217,12 @@ MonoBehaviour:
   _leftWall: {fileID: 1429085615}
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _leverPrefab: {fileID: 1459843604658881491, guid: 3ed7683f0f78fe946b9c7e68a01e3bed, type: 3}
+  _solutionRoomSlabs: []
+  _topHintRoomTiles: []
+  _rightHintRoomTiles: []
+  _botHintRoomTiles: []
+  _leftHintRoomTiles: []
+  _bombPrefab: {fileID: 0}
 --- !u!4 &2024699239
 Transform:
   m_ObjectHideFlags: 0
@@ -66212,6 +66332,10 @@ PrefabInstance:
     - target: {fileID: 6616146732978979553, guid: 28eb58b5a1e9088458bb86e05222d832, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971816777828540891, guid: 28eb58b5a1e9088458bb86e05222d832, type: 3}
+      propertyPath: _timeUntilExplosion
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8007384039942299660, guid: 28eb58b5a1e9088458bb86e05222d832, type: 3}
       propertyPath: m_Name
