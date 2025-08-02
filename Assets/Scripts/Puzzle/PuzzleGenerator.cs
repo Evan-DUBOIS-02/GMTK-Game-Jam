@@ -273,6 +273,10 @@ namespace Puzzle
                 case PuzzleType.Lever:
                     GenerateLeverPuzzle(hallwayObstacle, solutionRoom);
                     break;
+
+                case PuzzleType.BreakableWall:
+                    GenerateBreakableWallPuzzle(hallwayObstacle, solutionRoom);
+                    break;
             }
             return true;
         }
@@ -294,6 +298,12 @@ namespace Puzzle
         {
             Door generatedDoor = hallwayObstacle.GenerateDoor();
             room.ContainLever(generatedDoor);
+        }
+
+        private void GenerateBreakableWallPuzzle(Hallway hallwayObstacle, Room room)
+        {
+            BreakableWall breakableWall = hallwayObstacle.GenerateBreakableWall();
+            room.ContainBomb();
         }
 
         private void FindStartingAndExitRoom()
