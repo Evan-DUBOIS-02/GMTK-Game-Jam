@@ -6,20 +6,20 @@ namespace Puzzle
 
     public class Bomb : MonoBehaviour, Interactable
     {
-        public bool _isActive;
         [SerializeField]
-        public float _timeUntilExplode;
+        //public float _timeUntilExplode;
         public bool _isExploding = false;
         private float _explosionForce = 200f;
+        public GameObject rendererBomb;
 
         public void SetToDefaultState()
         {
-            _isActive = false;
+            gameObject.SetActive(true);
         }
 
         public int Interact(Player.PlayerState state)
         {
-            _isActive = !_isActive;
+            rendererBomb.SetActive(false);
             return 2;
         }
 

@@ -13,6 +13,7 @@ namespace Player
         [SerializeField]
         private float _timeUntilExplosion;
         private bool _bombIsTriggered;
+        private bool _isHoldinge;
 
         private void Start()
         {
@@ -22,45 +23,52 @@ namespace Player
 
         private void Update()
         {
-            if (_currentState.IsHoldingBomb == false && Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
+                if (_isHoldinge)
+                    return;
+                else
+                    _isHoldinge = true;
+
                 if (_currentInteractable != null)
                 {
+                    Debug.Log(_currentInteractable.Interact(_currentState));
                     if (_currentInteractable.Interact(_currentState) == 1)
                     {
                         _currentState.IsInteracting = true;
                         GhostManager.Instance.ForceRecord();
                         GameManager.Instance.StopLoop();
                     }
-                    else if(_currentInteractable.Interact(_currentState) == 2)
+
+                    else if (_currentState.IsHoldingBomb == false && _currentInteractable.Interact(_currentState) == 2)
                     {
                         _currentState.IsHoldingBomb = true;
                         _bomb = _currentInteractable as Bomb;
-                        _bombIsTriggered = true;
                     }
+                }
+                else if(_currentState.IsHoldingBomb == true)
+                {
+                    Debug.Log("Depose la bombe");
+                    _currentState.IsHoldingBomb = false;
+                    _bomb.transform.position = this.transform.position;
+                    _bomb.rendererBomb.SetActive(true);
+                    _timeUntilExplosion -= Time.deltaTime;
                 }
             }
 
-            if(_bombIsTriggered)
+            else
+                _isHoldinge = false;
+            if(_currentState.IsHoldingBomb)
             {
-                if (_timeUntilExplosion >= 0)
+                Debug.Log("Possede la bombe + temps restants : " + _timeUntilExplosion);
+                _timeUntilExplosion -= Time.deltaTime;
+                if (_timeUntilExplosion <= 0)
                 {
-                    if( _currentState.IsHoldingBomb == true && Input.GetKeyDown(KeyCode.E))
-                    {
-                        _currentState.IsHoldingBomb = false;
-                        _bomb.transform.position = this.transform.position;
-                        _bomb._isActive = true;
-                    }
-                    _timeUntilExplosion -= Time.deltaTime;
-                    Debug.Log("Decompte : " + _timeUntilExplosion);
-                }
-                else
-                {
-                    Debug.Log("boom");
-                    _bomb._isExploding = true;
                     _currentState.IsHoldingBomb = false;
+                    _bomb._isExploding = true;
                 }
             }
+
         }
 
         public PlayerState GetPlayerState()

@@ -46,15 +46,6 @@ namespace Dungeon
 
         public Puzzle.BreakableWall GenerateBreakableWall()
         {
-            // Avoid to superpose new door to exit door
-            if (_room1.IsExitRoom || _room2.IsExitRoom)
-                return null;
-            // If starting room is isolated, don't place door in the unique connected hallway
-            if (_room1.IsStartingRoom && _room1.NumberOfAdjacentRoom == 1)
-                return null;
-            if (_room2.IsStartingRoom && _room2.NumberOfAdjacentRoom == 1)
-                return null;
-
             GameObject BWGo = Instantiate(_breakableWallPrefab, transform.position, Quaternion.identity);
             Puzzle.BreakableWall bwScript = _breakableWallPrefab.GetComponent<Puzzle.BreakableWall>();
             /*if (_room1.RoomIndex.x < _room2.RoomIndex.x)
