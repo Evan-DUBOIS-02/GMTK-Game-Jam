@@ -2,7 +2,7 @@
 {
     public interface Interactable
     {
-        public bool TryInteract(Player.PlayerState sate);
+        public int Interact(Player.PlayerState sate); //1 = Lever / 2 = Bomb
         public void SetToDefaultState();
     }
 }

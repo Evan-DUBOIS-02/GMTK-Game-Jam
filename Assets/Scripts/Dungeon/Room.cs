@@ -30,6 +30,7 @@ namespace Dungeon
         [SerializeField] private List<GameObject> _rightHintRoomTiles;
         [SerializeField] private List<GameObject> _botHintRoomTiles;
         [SerializeField] private List<GameObject> _leftHintRoomTiles;
+        [SerializeField] private GameObject _bombPrefab;
 
         private Vector2Int _roomIndex;
         public Vector2Int RoomIndex{get{return _roomIndex;} set{_roomIndex = value;}}
@@ -148,6 +149,15 @@ namespace Dungeon
             lever.GetComponent<Puzzle.Lever>().Door = door;
             if(GameManager.Instance != null)
                 GameManager.Instance.RegisterInteractable(lever.GetComponent<Puzzle.Lever>());
+        }
+
+        public void ContainBomb()
+        {
+            _containPuzzleElement = true;
+            GameObject bomb = Instantiate(_bombPrefab, transform.position, Quaternion.identity);
+            bomb.transform.parent = transform;
+            if (GameManager.Instance != null)
+                GameManager.Instance.RegisterInteractable(bomb.GetComponent<Puzzle.Bomb>());
         }
     }
 }
