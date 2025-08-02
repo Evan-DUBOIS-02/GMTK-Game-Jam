@@ -10,7 +10,7 @@ using UnityEngine.Rendering;
 public enum PuzzleType
 {
     Lever,
-    Void,
+    //Void,
     PressurePlate,
     BreakableWall
 }
@@ -290,6 +290,12 @@ namespace Puzzle
                 return false;
             if (hallwayObstacle.Room2.IsStartingRoom && hallwayObstacle.Room2.NumberOfAdjacentRoom == 1)
                 return false;
+
+            foreach(var elem in _solutionToObstacle)
+            {
+                if(elem.Value ==  hallwayObstacle)
+                    return false;
+            }
             
             return true;
         }
