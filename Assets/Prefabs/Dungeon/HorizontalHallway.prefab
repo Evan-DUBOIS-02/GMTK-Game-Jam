@@ -1115,3 +1115,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
+  _breakableWallPrefab: {fileID: 3962335718568738796, guid: 5e79e2f063df2114a9c1630fbee448ba, type: 3}

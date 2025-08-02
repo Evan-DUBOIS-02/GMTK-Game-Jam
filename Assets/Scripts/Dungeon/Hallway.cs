@@ -6,7 +6,8 @@ namespace Dungeon
     public class Hallway: MonoBehaviour
     {
         [SerializeField] private GameObject _doorPrefab;
-        
+        [SerializeField] private GameObject _breakableWallPrefab;
+
         private Room _room1;
         public Room Room1{get{return _room1;}}
         private Room _room2;
@@ -41,6 +42,28 @@ namespace Dungeon
             doorScript.ManageDoor(false);
             ContainObstacle = true;
             return doorScript;
+        }
+
+        public Puzzle.BreakableWall GenerateBreakableWall()
+        {
+            // Avoid to superpose new door to exit door
+            if (_room1.IsExitRoom || _room2.IsExitRoom)
+                return null;
+            // If starting room is isolated, don't place door in the unique connected hallway
+            if (_room1.IsStartingRoom && _room1.NumberOfAdjacentRoom == 1)
+                return null;
+            if (_room2.IsStartingRoom && _room2.NumberOfAdjacentRoom == 1)
+                return null;
+
+            GameObject BWGo = Instantiate(_breakableWallPrefab, transform.position, Quaternion.identity);
+            Puzzle.BreakableWall bwScript = _breakableWallPrefab.GetComponent<Puzzle.BreakableWall>();
+            /*if (_room1.RoomIndex.x < _room2.RoomIndex.x)
+                bwScript.SetSideRenderer(false);
+            else if (_room1.RoomIndex.x > _room2.RoomIndex.x)
+                bwScript.SetSideRenderer(true);
+            */BWGo.transform.SetParent(transform);
+            ContainObstacle = true;
+            return bwScript;
         }
     }
 }

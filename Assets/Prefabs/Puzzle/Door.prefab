@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6840421722054463021}
+  - component: {fileID: 8747052756539701263}
   m_Layer: 0
   m_Name: Door
   m_TagString: DungeonElement
@@ -35,6 +36,22 @@ Transform:
   - {fileID: 3944800703097943616}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8747052756539701263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2648790255498123107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307872df5c894d4ca68b85710e0cadc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _frontDoorClosed: {fileID: 6862395393908515979}
+  _frontDoorOpen: {fileID: 4210613221127395582}
+  _sideDoorClosed: {fileID: 7563345999402397616}
+  _sideDoorOpen: {fileID: 3009656779427107218}
 --- !u!1 &3009656779427107218
 GameObject:
   m_ObjectHideFlags: 0

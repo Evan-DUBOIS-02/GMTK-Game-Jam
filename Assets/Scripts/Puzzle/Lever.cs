@@ -20,12 +20,12 @@ namespace Puzzle
             _door.ManageDoor(_isActive);
         }
 
-        public bool TryInteract(Player.PlayerState state)
+        public int Interact(Player.PlayerState state)
         {
             _isActive = true; 
             SwitchSprite();
             _door.ManageDoor(_isActive);
-            return true;
+            return 1;
         }
 
         private void SwitchSprite()

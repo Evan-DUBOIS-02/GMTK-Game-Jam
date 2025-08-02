@@ -41,7 +41,7 @@ namespace Player
                 transform.position = state.Position;
                 // if interacting and near to interactable object, interact
                 if (state.IsInteracting && _currentInteractable != null)
-                    _currentInteractable.TryInteract(state);
+                    _currentInteractable.Interact(state);
                 // Wait for the next state
                 yield return new WaitForSeconds(_playbackInterval);
             }
