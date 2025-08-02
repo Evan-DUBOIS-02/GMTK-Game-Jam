@@ -25,6 +25,7 @@ namespace Puzzle
         private List<Hallway> _hallways;
         private Room _exitRoom;
         private Room _startingRoom;
+        private Dictionary<Room, Hallway> _solutionToObstacle;
         
         [SerializeField] private List<Sprite> _availableRuneSprites;
         [SerializeField] private Sprite _blankRune;
@@ -42,14 +43,15 @@ namespace Puzzle
             GenerateMainPuzzle();
             
             // Generate random puzzles
+            _solutionToObstacle = new Dictionary<Room, Hallway>();
             List<PuzzleType> availablePuzzles = new List<PuzzleType>();
             foreach (PuzzleType puzzleType in Enum.GetValues(typeof(PuzzleType)))
                 availablePuzzles.Add(puzzleType);
 
-            for (int i = 0; i < Random.Range(1, 3); i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (availablePuzzles.Count == 0) break;
-
+                
                 int randomPuzzleIndex = Random.Range(0, availablePuzzles.Count);
                 bool isGenerated = TryGeneratePuzzle(availablePuzzles[randomPuzzleIndex]);
                 availablePuzzles.RemoveAt(randomPuzzleIndex);
@@ -58,7 +60,8 @@ namespace Puzzle
                     i--;
             }
         }
-
+        
+        #region Main puzzle generation
         private void GenerateMainPuzzle()
         {
             // Select 4 random runes sprites
@@ -182,53 +185,115 @@ namespace Puzzle
             
             return repartition;
         }
+        #endregion
 
         public bool TryGeneratePuzzle(PuzzleType type)
         {
-            bool success;
+            // ===
+            // Generate obstacle
+            // ===
+            Hallway hallwayObstacle = null;
+            bool isValid = false;
+            
+            do
+            {
+                hallwayObstacle = _hallways[Random.Range(0, _hallways.Count)];
+                isValid = IsValidObstaclePosition(hallwayObstacle);
+            } while (!isValid);
+            
+            // ===
+            // Generate solution
+            // ===
+            List<Room> generatedRoomsTmp = new List<Room>(_generatedRooms);
+            generatedRoomsTmp.Remove(_exitRoom);
+            generatedRoomsTmp.Remove(_startingRoom);
+            // remove all solutions rooms
+            foreach (var elem in _solutionToObstacle)
+                generatedRoomsTmp.Remove(elem.Key);
+            // remove solution room
+            for(int i = 0; i < generatedRoomsTmp.Count; i++)
+                if (generatedRoomsTmp[i].IsSolutionRoom)
+                {
+                    generatedRoomsTmp.Remove(generatedRoomsTmp[i]);
+                    break;
+                }
+            
+            Room solutionRoom = null;
+            isValid = false;
+            while (!isValid)
+            {
+                solutionRoom = generatedRoomsTmp[Random.Range(0, generatedRoomsTmp.Count)];
+                
+                // Start queue
+                Queue<Room> startingRooms = new Queue<Room>();
+                startingRooms.Enqueue(_startingRoom);
+                // All obstacles list
+                List<Hallway> obstacles = _solutionToObstacle.Values.ToList();
+                obstacles.Add(hallwayObstacle);
+                
+                // Direct access between player and solution
+                if(ExistPath(startingRooms, solutionRoom, obstacles, new List<Room>()))
+                    isValid = true;
+                // Other case
+                else
+                {
+                    startingRooms = new Queue<Room>();
+                    startingRooms.Enqueue(_startingRoom);
+                    // Blocked by new generated obstacle
+                    if (!ExistPath(startingRooms, solutionRoom, new List<Hallway>() { hallwayObstacle },
+                            new List<Room>()))
+                    {
+                        generatedRoomsTmp.Remove(solutionRoom);
+                        isValid = false;
+                    }
+                    // Cross puzzle case
+                    else
+                    {
+                        foreach (var elem in _solutionToObstacle)
+                        {
+                            startingRooms = new Queue<Room>();
+                            startingRooms.Enqueue(elem.Key);
+                            if (!ExistPath(startingRooms, elem.Value.Room1, new List<Hallway>() { hallwayObstacle },
+                                    new List<Room>()))
+                            {
+                                generatedRoomsTmp.Remove(solutionRoom);
+                                isValid = false;
+                            }
+                        }
+
+                        isValid = true;
+                    }
+                }
+            }
+            
+            _solutionToObstacle.Add(solutionRoom, hallwayObstacle);
 
             switch (type)
             {
                 case PuzzleType.Lever:
-                    success = TryGenerateLever();
-                    break;
-                default:
-                    success = false;
+                    GenerateLeverPuzzle(hallwayObstacle, solutionRoom);
                     break;
             }
-
-            return success;
+            return true;
         }
 
-        private bool TryGenerateLever()
+        private bool IsValidObstaclePosition(Hallway hallwayObstacle)
         {
-            // Place door in random hallway
-            bool isDoorPlaced = false;
-            Door generatedDoor = null;
-            do
-            {
-                Hallway hallway = _hallways[Random.Range(0, _hallways.Count)];
-                if (!hallway.ContainObstacle)
-                {
-                    generatedDoor = hallway.GenerateDoor();
-                    isDoorPlaced = generatedDoor != null;
-                }
-            }while(!isDoorPlaced);
+            if (hallwayObstacle.Room1.IsExitRoom || hallwayObstacle.Room2.IsExitRoom)
+                return false;
+            // If starting room is isolated, don't place door in the unique connected hallway
+            if (hallwayObstacle.Room1.IsStartingRoom && hallwayObstacle.Room1.NumberOfAdjacentRoom == 1)
+                return false;
+            if (hallwayObstacle.Room2.IsStartingRoom && hallwayObstacle.Room2.NumberOfAdjacentRoom == 1)
+                return false;
             
-            // Place lever in random available room
-            bool isLeverPlaced = false;
-            do
-            {
-                Room room = _generatedRooms[Random.Range(0, _generatedRooms.Count)];
-                Queue<Room> rooms = new Queue<Room>();
-                rooms.Enqueue(_startingRoom);
-                if (room != _exitRoom && room!= _startingRoom  && !room.IsSolutionRoom && ExistPath(rooms, new List<Room>(), room))
-                {
-                    room.ContainLever(generatedDoor);
-                    isLeverPlaced = true;
-                }
-            } while (!isLeverPlaced);
             return true;
+        }
+
+        private void GenerateLeverPuzzle(Hallway hallwayObstacle, Room room)
+        {
+            Door generatedDoor = hallwayObstacle.GenerateDoor();
+            room.ContainLever(generatedDoor);
         }
 
         private void FindStartingAndExitRoom()
@@ -245,7 +310,7 @@ namespace Puzzle
             }
         }
 
-        private bool ExistPath(Queue<Room> startingRooms, List<Room> marquedRoom, Room end)
+        private bool ExistPath(Queue<Room> startingRooms, Room end, List<Hallway> obstacles, List<Room> marquedRoom)
         {
             if (startingRooms.Contains(end))
                 return true;
@@ -257,7 +322,7 @@ namespace Puzzle
             
             foreach (var hallway in roomToAnalyse.ConnectedHallways)
             {
-                if (!hallway.ContainObstacle)
+                if (!obstacles.Contains(hallway))
                 {
                     Room other = hallway.GetOtherRoom(roomToAnalyse);
                     if(!marquedRoom.Contains(other))
@@ -265,7 +330,7 @@ namespace Puzzle
                 }
             }
             
-            return ExistPath(startingRooms, marquedRoom, end);
+            return ExistPath(startingRooms, end, obstacles, marquedRoom);
         }
     }
 }

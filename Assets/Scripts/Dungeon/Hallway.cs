@@ -8,7 +8,9 @@ namespace Dungeon
         [SerializeField] private GameObject _doorPrefab;
         
         private Room _room1;
+        public Room Room1{get{return _room1;}}
         private Room _room2;
+        public Room Room2{get{return _room2;}}
 
         [NonSerialized] public bool ContainObstacle = false;
         
@@ -29,15 +31,6 @@ namespace Dungeon
 
         public Puzzle.Door GenerateDoor()
         {
-            // Avoid to superpose new door to exit door
-            if (_room1.IsExitRoom || _room2.IsExitRoom)
-                return null;
-            // If starting room is isolated, don't place door in the unique connected hallway
-            if (_room1.IsStartingRoom && _room1.NumberOfAdjacentRoom == 1)
-                return null;
-            if (_room2.IsStartingRoom && _room2.NumberOfAdjacentRoom == 1)
-                return null;
-            
             GameObject doorGo = Instantiate(_doorPrefab, transform.position, Quaternion.identity);
             Puzzle.Door doorScript = doorGo.GetComponent<Puzzle.Door>();
             if(_room1.RoomIndex.x <  _room2.RoomIndex.x)
