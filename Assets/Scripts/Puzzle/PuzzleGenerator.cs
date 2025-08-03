@@ -4,8 +4,6 @@ using System;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.Rendering;
 
 public enum PuzzleType
 {
