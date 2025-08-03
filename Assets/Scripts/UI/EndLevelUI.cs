@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,19 +11,23 @@ namespace UI
         [SerializeField] private string _nextLevelName;
         [SerializeField] private TMP_Text _endLevelUIText;
         [SerializeField] private TMP_Text _totalTimeText;
+        [SerializeField] private TMP_Text _seed;
         public void UpdateUI(int numberOfLoop, float totalTime)
         {
             _endLevelUIText.text = numberOfLoop.ToString();
             _totalTimeText.text = ((int)totalTime)+".s";
+            _seed.text = "Seed : " + SeedManager.Instance._seed.ToString();
         }
         
         public void OnRetryClicked()
         {
-            Debug.Log("RetryClicked");
+            SeedManager.Instance.GenerateRandomizer(SeedManager.Instance._seed);
+            SceneManager.LoadScene(_nextLevelName);
         }
 
         public void OnNextClicked()
         {
+            SeedManager.Instance.GenerateRandomizer((int)DateTime.Now.Ticks);
             SceneManager.LoadScene(_nextLevelName);
         }
 
