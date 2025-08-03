@@ -1,5 +1,6 @@
 ﻿using Game;
 using Puzzle;
+using System.Collections;
 using System.Linq.Expressions;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace Player
         [SerializeField]
         private bool _bombIsTriggered;
         private bool _isHoldinge;
+        public bool _isBeingBombed; //If true => Can go through void
 
         private void Start()
         {
@@ -42,21 +44,28 @@ namespace Player
                     {
                         _currentState.IsHoldingBomb = true;
                         _bomb = _currentInteractable as Bomb;
+                        Debug.Log("recupere bombe");
                     }
                 }
-                else if(_currentState.IsHoldingBomb == true)
+                else if(_currentState.IsHoldingBomb == true )
                 {
+                    Debug.Log("Tu rentres dedans quand?");
                     _currentState.IsHoldingBomb = false;
                     _bomb.transform.position = this.transform.position;
-                    _bomb.rendererBomb.SetActive(true);
+                    //_bomb.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
+                    _bomb._isExploding = true;
                     GhostManager.Instance.ForceRecord();
                     GameManager.Instance.StopLoop();
-                    _bomb._isExploding = true;
                 }
             }
 
             else
                 _isHoldinge = false;
+        }
+
+        IEnumerator PauseThenRestart()
+        {
+            yield return new WaitForSecondsRealtime(2f);
         }
 
         public PlayerState GetPlayerState()

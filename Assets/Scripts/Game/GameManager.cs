@@ -15,6 +15,11 @@ namespace Game
         // Manage loop
         private bool _isLoopStarted;
 
+        [SerializeField]
+        private float _timeOfALoop;
+
+        private float _timeUntilLoopEnd;
+
         // Player ref (a faire: trouve via un tag que par SerializeField)
         [SerializeField] private GameObject _player;
         
@@ -33,6 +38,7 @@ namespace Game
         private void Start()
         {
             // Init
+            _timeUntilLoopEnd = _timeOfALoop;
             _interactables =  new List<Interactable>();
         }
 
@@ -44,6 +50,17 @@ namespace Game
                 // Start new loop
                 StopLoop();
             }
+
+            if (_isLoopStarted)
+            {
+                if (_timeUntilLoopEnd <= 0)
+                {
+                    StopLoop();
+                }
+                _timeUntilLoopEnd -= Time.deltaTime;
+            }
+            else
+                _timeUntilLoopEnd = _timeOfALoop;
         }
 
         public void StopLoop()

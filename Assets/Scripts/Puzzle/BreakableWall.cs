@@ -5,11 +5,28 @@ namespace Puzzle
 
     public class BreakableWall : MonoBehaviour
     {
-        [SerializeField] private GameObject _breakableWall;
+        [SerializeField] private GameObject _breakableWallVertical;
+        [SerializeField] private GameObject _breakableWallHorizontal;
 
-        public void IsDestroyed()
+        private bool _isHorizontal = false;
+
+        public void IsDisabled()
         {
-            _breakableWall.SetActive(false);
+            if (!_isHorizontal)
+            {
+                _breakableWallVertical.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else
+            {
+                _breakableWallHorizontal.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+        }
+
+        public void SetSideRenderer()
+        {
+            _isHorizontal = true;
+            _breakableWallVertical.SetActive(false);
+            _breakableWallHorizontal.SetActive(true);
         }
     }
 }
