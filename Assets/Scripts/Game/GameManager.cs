@@ -37,8 +37,10 @@ namespace Game
         [SerializeField] private List<AudioClip> _musiques;
         
         // End level
+        [Header("UI")]
         [NonSerialized] public bool IsEndLevel = false;
         [SerializeField] private GameObject _endLevelUI;
+        [SerializeField] private GameObject _inGameUI;
         
         // light
         [SerializeField] private GameObject _globalLight;
@@ -143,6 +145,7 @@ namespace Game
             _audioSource.Play();
             _endLevelUI.SetActive(true);
             _endLevelUI.GetComponent<EndLevelUI>().UpdateUI(_numberOfLoop, _totalTime);
+            _inGameUI.SetActive(false);
         }
     }
 }
