@@ -15,8 +15,9 @@ namespace Game
         public static GameManager Instance => _instance;
         
         // Manage loop
-        private int _numberOfLoop;
+        private int _numberOfLoop = 1;
         [SerializeField] private TMP_Text _numberOfLoopUI;
+        [SerializeField] private TMP_Text _timerUI;
         private bool _isLoopStarted;
         [SerializeField] private float _timeOfALoop;
         private float _timeUntilLoopEnd;
@@ -80,6 +81,10 @@ namespace Game
                     StopLoop();
                 }
                 _timeUntilLoopEnd -= Time.deltaTime;
+                if(_timeUntilLoopEnd < 10)
+                    _timerUI.text = "0"+(int)_timeUntilLoopEnd;
+                else
+                    _timerUI.text = ((int)_timeUntilLoopEnd).ToString();
             }
             else
                 _timeUntilLoopEnd = _timeOfALoop;
@@ -98,7 +103,11 @@ namespace Game
             _isLoopStarted = false;
             // New loop
             _numberOfLoop++;
-            _numberOfLoopUI.text = _numberOfLoop.ToString();
+            if(_numberOfLoop < 10)
+                _numberOfLoopUI.text = "0"+_numberOfLoop;
+            else
+                _numberOfLoopUI.text = _numberOfLoop.ToString();
+            _timerUI.text = "20";
             // Audio
             _audioSource.clip = _preRun;
             _audioSource.Play();
