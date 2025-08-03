@@ -10548,6 +10548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _leverOn: {fileID: 835900641}
   _leverOff: {fileID: 435688864}
+  _UI: {fileID: 0}
 --- !u!1 &197603336
 GameObject:
   m_ObjectHideFlags: 0

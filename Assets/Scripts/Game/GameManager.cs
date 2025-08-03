@@ -80,11 +80,14 @@ namespace Game
                 {
                     StopLoop();
                 }
-                _timeUntilLoopEnd -= Time.deltaTime;
-                if(_timeUntilLoopEnd < 10)
-                    _timerUI.text = "0"+(int)_timeUntilLoopEnd;
                 else
-                    _timerUI.text = ((int)_timeUntilLoopEnd).ToString();
+                {
+                    _timeUntilLoopEnd -= Time.deltaTime;
+                    if (_timeUntilLoopEnd < 10)
+                        _timerUI.text = "0" + (int)_timeUntilLoopEnd;
+                    else
+                        _timerUI.text = ((int)_timeUntilLoopEnd).ToString();
+                }
             }
             else
                 _timeUntilLoopEnd = _timeOfALoop;

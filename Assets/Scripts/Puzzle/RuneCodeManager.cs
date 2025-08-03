@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -10,9 +11,18 @@ namespace Puzzle
         private int compteur;
         private int currentValue = -1;
         private Door _exitDoor;
+        private List<RuneSlabs> _activatedSlabs;
 
-        public bool RegisterInput(int value)
+        private void Start()
         {
+            
+            _activatedSlabs = new List<RuneSlabs>();
+        }
+
+        public void RegisterInput(int value, RuneSlabs slab)
+        {
+            _activatedSlabs.Add(slab);
+            
             // Correct entry
             if (currentValue < value)
             {
@@ -21,8 +31,6 @@ namespace Puzzle
                 
                 if (compteur == 4)
                     OpenExitDoor();
-                
-                return true;
             }
             // Wrong entry
             else
@@ -30,10 +38,13 @@ namespace Puzzle
                 compteur = 0;
                 currentValue = -1;
                 
-                foreach (var slab in GetComponentsInChildren<RuneSlabs>())
-                    slab.EnableSlab();
-                
-                return false;
+                GameManager.Instance.StopLoop();
+
+                foreach (var s in _activatedSlabs)
+                {
+                    s.EnableSlab();
+                }
+                _activatedSlabs.Clear();
             }
         }
 
