@@ -10,9 +10,10 @@ using UnityEngine.Rendering;
 public enum PuzzleType
 {
     Lever,
-    Void,
+    // Void,
+    Spike,
     PressurePlate,
-    BreakableWall
+    // BreakableWall
 }
 
 namespace Puzzle
@@ -222,6 +223,10 @@ namespace Puzzle
             isValid = false;
             while (!isValid)
             {
+                // We can't place soliton with this obstacle position
+                if (generatedRoomsTmp.Count <= 0)
+                    return TryGeneratePuzzle(type);
+                
                 solutionRoom = generatedRoomsTmp[Random.Range(0, generatedRoomsTmp.Count)];
                 
                 // Start queue
@@ -271,11 +276,11 @@ namespace Puzzle
                 case PuzzleType.Lever:
                     GenerateLeverPuzzle(hallwayObstacle, solutionRoom);
                     break;
-                case PuzzleType.BreakableWall:
-                    GenerateBreakableWallPuzzle(hallwayObstacle, solutionRoom);
-                    break;
-                case PuzzleType.Void:
-                    GenerateVoidPuzzle(hallwayObstacle);
+                // case PuzzleType.BreakableWall:
+                    // GenerateBreakableWallPuzzle(hallwayObstacle, solutionRoom);
+                    // break;
+                case PuzzleType.Spike:
+                    GenerateSpikePuzzle(hallwayObstacle);
                     break;
             }
             return true;
@@ -305,16 +310,21 @@ namespace Puzzle
             Door generatedDoor = hallwayObstacle.GenerateDoor();
             room.ContainLever(generatedDoor);
         }
+
+        private void GenerateSpikePuzzle(Hallway hallwayObstacle)
+        {
+            hallwayObstacle.GenerateSpike();
+        }
         
         private void GenerateBreakableWallPuzzle(Hallway hallwayObstacle, Room room)
         {
-            BreakableWall breakableWall = hallwayObstacle.GenerateBreakableWall();
-            room.ContainBomb();
+            BreakableWall wall = hallwayObstacle.GenerateBreakableWall();
+            room.ContainBomb(wall);
         }
 
         private void GenerateVoidPuzzle(Hallway hallwayObstacle)
         {
-            Void voidGO = hallwayObstacle.GenerateVoid();
+            // Void voidGO = hallwayObstacle.GenerateVoid();
         }
 
         private void FindStartingAndExitRoom()

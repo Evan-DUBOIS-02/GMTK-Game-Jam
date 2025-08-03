@@ -13,7 +13,6 @@ namespace Puzzle
 
         public bool RegisterInput(int value)
         {
-            Debug.Log(value);
             // Correct entry
             if (currentValue < value)
             {
@@ -34,7 +33,6 @@ namespace Puzzle
                 foreach (var slab in GetComponentsInChildren<RuneSlabs>())
                     slab.EnableSlab();
                 
-                Debug.Log("Failed !");
                 return false;
             }
         }

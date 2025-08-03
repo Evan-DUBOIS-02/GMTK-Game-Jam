@@ -151,11 +151,12 @@ namespace Dungeon
                 GameManager.Instance.RegisterInteractable(lever.GetComponent<Puzzle.Lever>());
         }
 
-        public void ContainBomb()
+        public void ContainBomb(BreakableWall wall)
         {
             _containPuzzleElement = true;
             GameObject bomb = Instantiate(_bombPrefab, transform.position, Quaternion.identity);
             bomb.transform.parent = transform;
+            bomb.GetComponent<Bomb>().Wall = wall;
             if (GameManager.Instance != null)
                 GameManager.Instance.RegisterInteractable(bomb.GetComponent<Puzzle.Bomb>());
         }

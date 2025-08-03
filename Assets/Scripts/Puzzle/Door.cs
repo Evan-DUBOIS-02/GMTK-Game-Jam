@@ -10,7 +10,7 @@ namespace Puzzle
         [SerializeField] private GameObject _sideDoorClosed;
         [SerializeField] private GameObject _sideDoorOpen;
         
-        private bool _isSideDoor = false;
+        private bool _isSideDoor;
         
         public void ManageDoor(bool open)
         {

@@ -1,4 +1,6 @@
 ﻿using System;
+using Game;
+using Puzzle;
 using UnityEngine;
 
 namespace Dungeon
@@ -8,6 +10,7 @@ namespace Dungeon
         [SerializeField] private GameObject _doorPrefab;
         [SerializeField] private GameObject _breakableWallPrefab;
         [SerializeField] private GameObject _voidPrefab;
+        [SerializeField] private GameObject _spikePrefab;
 
         private Room _room1;
         public Room Room1{get{return _room1;}}
@@ -45,10 +48,10 @@ namespace Dungeon
             return doorScript;
         }
 
-        public Puzzle.BreakableWall GenerateBreakableWall()
+        public BreakableWall GenerateBreakableWall()
         {
             GameObject BWGo = Instantiate(_breakableWallPrefab, transform.position, Quaternion.identity);
-            Puzzle.BreakableWall bwScript = _breakableWallPrefab.GetComponent<Puzzle.BreakableWall>();
+            Puzzle.BreakableWall bwScript = BWGo.GetComponent<Puzzle.BreakableWall>();
             if(_room1.RoomIndex.x != _room2.RoomIndex.x)
                 bwScript.SetSideRenderer();
             BWGo.transform.SetParent(transform);
@@ -56,10 +59,18 @@ namespace Dungeon
             return bwScript;
         }
 
+        public void GenerateSpike()
+        {
+            GameObject spikeGo = Instantiate(_spikePrefab, transform.position, Quaternion.identity);
+            spikeGo.transform.SetParent(transform);
+            ContainObstacle = true;
+            GameManager.Instance.RegisterInteractable(spikeGo.GetComponent<Spike>());
+        }
+
         public Puzzle.Void GenerateVoid()
         {
             GameObject VoidGO = Instantiate(_voidPrefab, transform.position, Quaternion.identity);
-            Puzzle.Void voidScript = _voidPrefab.GetComponent<Puzzle.Void>();
+            Puzzle.Void voidScript = VoidGO.GetComponent<Puzzle.Void>();
             if (_room1.RoomIndex.x != _room2.RoomIndex.x)
                 voidScript.SetSideRenderer();
             VoidGO.transform.SetParent(transform);

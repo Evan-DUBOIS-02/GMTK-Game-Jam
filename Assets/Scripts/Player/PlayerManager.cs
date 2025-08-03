@@ -10,50 +10,45 @@ namespace Player
     {
         private Interactable _currentInteractable;
         private PlayerState _currentState;
-        private Bomb _bomb;
-        [SerializeField]
-        private bool _bombIsTriggered;
+        [SerializeField] private GameObject _bombPrefab;
         private bool _isHoldinge;
+        private bool _isHoldingBomb;
         public bool _isBeingBombed; //If true => Can go through void
-
+        
         private void Start()
         {
             _currentState = new PlayerState();
-            _bombIsTriggered = false;
         }
 
         private void Update()
         {
+            Debug.Log(_isHoldinge);
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (_isHoldinge)
                     return;
-                else
-                    _isHoldinge = true;
+
+                _isHoldinge = true;
 
                 if (_currentInteractable != null)
                 {
-                    if (_currentInteractable.Interact(_currentState) == 1)
+                    int interactableId = _currentInteractable.Interact(_currentState);
+                    if (interactableId == 1)
                     {
                         _currentState.IsInteracting = true;
                         GhostManager.Instance.ForceRecord();
                         GameManager.Instance.StopLoop();
                     }
-
-                    else if (_currentState.IsHoldingBomb == false && _currentInteractable.Interact(_currentState) == 2)
+                    else if (_isHoldingBomb == false && interactableId == 2)
                     {
-                        _currentState.IsHoldingBomb = true;
-                        _bomb = _currentInteractable as Bomb;
-                        Debug.Log("recupere bombe");
+                        _currentState.IsInteracting = true;
+                        _isHoldingBomb = true;
                     }
                 }
-                else if(_currentState.IsHoldingBomb == true )
+                else if(_isHoldingBomb)
                 {
-                    Debug.Log("Tu rentres dedans quand?");
-                    _currentState.IsHoldingBomb = false;
-                    _bomb.transform.position = this.transform.position;
-                    //_bomb.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
-                    _bomb._isExploding = true;
+                    _currentState.IsPlacingBomb = true;
+                    _isHoldingBomb = false;
                     GhostManager.Instance.ForceRecord();
                     GameManager.Instance.StopLoop();
                 }
@@ -68,6 +63,12 @@ namespace Player
             yield return new WaitForSecondsRealtime(2f);
         }
 
+        public void ResetState()
+        {
+            _isHoldingBomb = false;
+            GetComponent<PlayerMovement>().InitializePosition();
+        }
+
         public PlayerState GetPlayerState()
         {
             _currentState.Position = transform.position;
@@ -80,7 +81,6 @@ namespace Player
             if (other.TryGetComponent(out interactable))
             {
                 _currentInteractable = interactable;
-                return;
             }
         }
 

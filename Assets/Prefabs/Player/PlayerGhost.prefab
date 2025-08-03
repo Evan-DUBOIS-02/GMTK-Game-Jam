@@ -198,3 +198,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playbackInterval: 0.02
+  _bombPrefab: {fileID: 3356625047252932605, guid: 08ffcc5809e317842aaef846c583258c, type: 3}

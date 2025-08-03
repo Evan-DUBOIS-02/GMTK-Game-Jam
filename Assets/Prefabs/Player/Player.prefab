@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 7971816777828540891}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -449,6 +449,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c08da9d8ce3c4a54b92fb128aee6c4a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bombPrefab: {fileID: 3356625047252932605, guid: 08ffcc5809e317842aaef846c583258c, type: 3}
+  _isBeingBombed: 0
 --- !u!1 &8268559434631696920
 GameObject:
   m_ObjectHideFlags: 0

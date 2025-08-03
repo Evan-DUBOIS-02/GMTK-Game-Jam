@@ -13,6 +13,9 @@ namespace Player
         private List<PlayerState> _states;
         // Save interactable to interact with it if necessary
         private Interactable _currentInteractable;
+
+        [SerializeField] private GameObject _bombPrefab;
+        private GameObject _bombPlaced = null;
         
         public void Init(List<PlayerState> states)
         {
@@ -25,6 +28,9 @@ namespace Player
             StopAllCoroutines();
             // Reset position
             transform.position = _states[0].Position;
+            _currentInteractable = null;
+            if(_bombPlaced != null)
+                Destroy(_bombPlaced);
         }
 
         public void StartReplay()
@@ -39,9 +45,18 @@ namespace Player
             {
                 // apply position
                 transform.position = state.Position;
+                
                 // if interacting and near to interactable object, interact
                 if (state.IsInteracting && _currentInteractable != null)
+                {
                     _currentInteractable.Interact(state);
+                }
+                
+                if (state.IsPlacingBomb)
+                {
+                    _bombPlaced = Instantiate(_bombPrefab, transform.position, Quaternion.identity);
+                    _bombPlaced.GetComponent<Bomb>()._isExploding = true;
+                }
                 // Wait for the next state
                 yield return new WaitForSeconds(_playbackInterval);
             }
@@ -54,6 +69,15 @@ namespace Player
             if (other.TryGetComponent(out interactable))
             {
                 _currentInteractable = interactable;
+            }
+        }
+        
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            Interactable interactable;
+            if (other.TryGetComponent(out interactable))
+            {
+                _currentInteractable = null;
             }
         }
     }
