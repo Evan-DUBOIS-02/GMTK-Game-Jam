@@ -11,15 +11,29 @@ namespace Puzzle
         public bool _isExploding = false;
         private float _explosionForce = 200f;
         public GameObject rendererBomb;
+        public Vector3 initialPosition;
+
+        private void Start()
+        {
+            initialPosition = transform.position;
+        }
+
+        private void Update()
+        {
+            Debug.Log("exploding status : " + _isExploding);
+        }
 
         public void SetToDefaultState()
         {
             gameObject.SetActive(true);
+            transform.position = initialPosition;
+            _isExploding = false;
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
         }
 
         public int Interact(Player.PlayerState state)
         {
-            rendererBomb.SetActive(false);
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
             return 2;
         }
 
@@ -27,11 +41,13 @@ namespace Puzzle
         {
             if (_isExploding && collision.GetComponent<BreakableWall>())
             {
-                collision.gameObject.GetComponent<BreakableWall>().IsDestroyed();
+                Debug.Log("Collision breakable wall");
+                collision.gameObject.GetComponent<BreakableWall>().IsDisabled();
                 rendererBomb.SetActive(false);
             }
             if(_isExploding && collision.CompareTag("Player"))
             {
+                Debug.Log("Collision player");
                 rendererBomb.SetActive(false);
                 Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
                 if (rb != null)
@@ -42,6 +58,7 @@ namespace Puzzle
                     // Apply force
                     rb.AddForce(direction * _explosionForce);
                 }
+                rendererBomb.SetActive(false);
             }
         }
     }

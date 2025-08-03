@@ -7,6 +7,7 @@ namespace Dungeon
     {
         [SerializeField] private GameObject _doorPrefab;
         [SerializeField] private GameObject _breakableWallPrefab;
+        [SerializeField] private GameObject _voidPrefab;
 
         private Room _room1;
         public Room Room1{get{return _room1;}}
@@ -48,13 +49,22 @@ namespace Dungeon
         {
             GameObject BWGo = Instantiate(_breakableWallPrefab, transform.position, Quaternion.identity);
             Puzzle.BreakableWall bwScript = _breakableWallPrefab.GetComponent<Puzzle.BreakableWall>();
-            /*if (_room1.RoomIndex.x < _room2.RoomIndex.x)
-                bwScript.SetSideRenderer(false);
-            else if (_room1.RoomIndex.x > _room2.RoomIndex.x)
-                bwScript.SetSideRenderer(true);
-            */BWGo.transform.SetParent(transform);
+            if(_room1.RoomIndex.x != _room2.RoomIndex.x)
+                bwScript.SetSideRenderer();
+            BWGo.transform.SetParent(transform);
             ContainObstacle = true;
             return bwScript;
+        }
+
+        public Puzzle.Void GenerateVoid()
+        {
+            GameObject VoidGO = Instantiate(_voidPrefab, transform.position, Quaternion.identity);
+            Puzzle.Void voidScript = _voidPrefab.GetComponent<Puzzle.Void>();
+            if (_room1.RoomIndex.x != _room2.RoomIndex.x)
+                voidScript.SetSideRenderer();
+            VoidGO.transform.SetParent(transform);
+            ContainObstacle = true;
+            return voidScript;
         }
     }
 }

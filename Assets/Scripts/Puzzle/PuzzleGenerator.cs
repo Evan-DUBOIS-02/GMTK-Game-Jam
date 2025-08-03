@@ -10,7 +10,7 @@ using UnityEngine.Rendering;
 public enum PuzzleType
 {
     Lever,
-    //Void,
+    Void,
     PressurePlate,
     BreakableWall
 }
@@ -274,6 +274,9 @@ namespace Puzzle
                 case PuzzleType.BreakableWall:
                     GenerateBreakableWallPuzzle(hallwayObstacle, solutionRoom);
                     break;
+                case PuzzleType.Void:
+                    GenerateVoidPuzzle(hallwayObstacle);
+                    break;
             }
             return true;
         }
@@ -307,6 +310,11 @@ namespace Puzzle
         {
             BreakableWall breakableWall = hallwayObstacle.GenerateBreakableWall();
             room.ContainBomb();
+        }
+
+        private void GenerateVoidPuzzle(Hallway hallwayObstacle)
+        {
+            Void voidGO = hallwayObstacle.GenerateVoid();
         }
 
         private void FindStartingAndExitRoom()
