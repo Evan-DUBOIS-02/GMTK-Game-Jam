@@ -26,6 +26,7 @@ namespace Player
         // List of all current ghost => remove oldest to limit the number
         private List<GhostReplayer> _ghosts;
 
+
         // Initialize unique instance
         private void Awake()
         {

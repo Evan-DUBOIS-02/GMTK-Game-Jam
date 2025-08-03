@@ -14,6 +14,7 @@ namespace Player
         Animator _animator;
         [SerializeField]
         GameObject _rendererGO;
+        
 
         private void Start()
         {
@@ -39,7 +40,8 @@ namespace Player
             Vector2 velocity = (newPosition - _lastPosition) / Time.fixedDeltaTime;
             _lastPosition = newPosition;
 
-            _animator.SetFloat("xVelocity", Mathf.Abs(velocity.x));
+            _animator.SetFloat("xVelocity", (Mathf.Abs(velocity.x) + Mathf.Abs(velocity.y)));
+            //_animator.SetFloat("xVelocity", Mathf.Abs(velocity.y));
         }
 
         public void InitializePosition()
@@ -57,6 +59,7 @@ namespace Player
             if (_isFacingRight && _movement.x < 0f || !_isFacingRight && _movement.x > 0f) 
             {
                 _isFacingRight = !_isFacingRight;
+                GetComponent<PlayerManager>()._currentState.IsFacingRight = _isFacingRight;
                 Vector3 ls = _rendererGO.transform.localScale;
                 ls.x *= -1f;
                 _rendererGO.transform.localScale = ls;

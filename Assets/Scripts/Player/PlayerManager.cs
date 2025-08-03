@@ -9,7 +9,7 @@ namespace Player
     public class PlayerManager: MonoBehaviour
     {
         private Interactable _currentInteractable;
-        private PlayerState _currentState;
+        public PlayerState _currentState;
         [SerializeField] private GameObject _bombPrefab;
         private bool _isHoldinge;
         private bool _isHoldingBomb;
@@ -22,7 +22,6 @@ namespace Player
 
         private void Update()
         {
-            Debug.Log(_isHoldinge);
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (_isHoldinge)
