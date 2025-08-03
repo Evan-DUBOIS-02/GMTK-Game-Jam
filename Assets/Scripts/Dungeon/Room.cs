@@ -68,6 +68,8 @@ namespace Dungeon
                     _availablePositions.Add(1);
                 if(_leftWall.activeSelf)
                     _availablePositions.Add(2);
+                if (_availablePositions.Count == 0)
+                    return;
                 int finalPosition = _availablePositions[Random.Range(0, _availablePositions.Count)];
                 switch (finalPosition)
                 {
