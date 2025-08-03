@@ -148,9 +148,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 17
-        width: 6
-        height: 15
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,10 +169,10 @@ TextureImporter:
       name: Torchlight_1
       rect:
         serializedVersion: 2
-        x: 15
-        y: 17
-        width: 7
-        height: 15
+        x: 16
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,9 +191,9 @@ TextureImporter:
       name: Torchlight_2
       rect:
         serializedVersion: 2
-        x: 17
-        y: 1
-        width: 13
+        x: 32
+        y: 16
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -213,9 +213,9 @@ TextureImporter:
       name: Torchlight_3
       rect:
         serializedVersion: 2
-        x: 31
+        x: 48
         y: 16
-        width: 7
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -235,9 +235,9 @@ TextureImporter:
       name: Torchlight_4
       rect:
         serializedVersion: 2
-        x: 47
-        y: 16
-        width: 7
+        x: 0
+        y: 0
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -257,10 +257,10 @@ TextureImporter:
       name: Torchlight_5
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
-        width: 13
-        height: 15
+        x: 16
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,10 +279,10 @@ TextureImporter:
       name: Torchlight_6
       rect:
         serializedVersion: 2
-        x: 33
-        y: 1
-        width: 13
-        height: 15
+        x: 32
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -301,7 +301,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6f574ff46510f0f4ebd7025066680dab
     internalID: 0
     vertices: []
     indices: 

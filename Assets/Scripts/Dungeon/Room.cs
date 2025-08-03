@@ -4,6 +4,7 @@ using System.Linq;
 using Game;
 using Puzzle;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Dungeon
 {
@@ -49,6 +50,56 @@ namespace Dungeon
         public int NumberOfAdjacentRoom{get{return _numberOfAdjacentRoom;}}
         
         [NonSerialized] public List<Hallway> ConnectedHallways;
+        [SerializeField] private GameObject _frontTorch;
+        [SerializeField] private GameObject _sideTorch;
+        private GameObject _generatedTopTorchLight;
+        private GameObject _generatedLeftTorchLight;
+        private GameObject _generatedRightTorchLight;
+
+        private void Start()
+        {
+            
+            if (Random.value <= 0.5f) // need to generate torch litgh ?
+            {
+                List<int> _availablePositions = new List<int>();
+                if(_upWall.activeSelf)
+                    _availablePositions.Add(0);
+                if(_rightWall.activeSelf)
+                    _availablePositions.Add(1);
+                if(_leftWall.activeSelf)
+                    _availablePositions.Add(2);
+                int finalPosition = _availablePositions[Random.Range(0, _availablePositions.Count)];
+                switch (finalPosition)
+                {
+                    case 0:
+                        _generatedTopTorchLight = Instantiate(_frontTorch, transform.position, Quaternion.identity);
+                        _generatedTopTorchLight.transform.parent = transform;
+                        _generatedTopTorchLight.transform.position = new Vector3(
+                            transform.position.x + Random.Range(-1.0f, 1.0f),
+                            transform.position.y + 2.5f,
+                            0);
+                        break;
+                    case 1:
+                        _generatedRightTorchLight = Instantiate(_sideTorch, transform.position, Quaternion.identity);
+                        _generatedRightTorchLight.transform.parent = transform;
+                        _generatedRightTorchLight.transform.position = new Vector3(
+                            transform.position.x + 1.5f,
+                            transform.position.y + Random.Range(-1.0f, 1.0f),
+                            0);
+                        _generatedRightTorchLight.GetComponent<Animator>().SetBool("IsRight", true);
+                        break;
+                    case 2:
+                        _generatedLeftTorchLight = Instantiate(_sideTorch, transform.position, Quaternion.identity);
+                        _generatedLeftTorchLight.transform.parent = transform;
+                        _generatedLeftTorchLight.transform.position = new Vector3(
+                            transform.position.x - 1.5f,
+                            transform.position.y + Random.Range(-1.0f, 1.0f),
+                            0);
+                        break;
+                }
+            }
+            
+        }
 
         public void OpenWall(Vector2Int direction)
         {
@@ -59,7 +110,7 @@ namespace Dungeon
                 _rightWall.SetActive(false);
             else if (direction == Vector2Int.down)
                 _downWall.SetActive(false);
-            else if(direction == Vector2Int.up)
+            else if (direction == Vector2Int.up)
                 _upWall.SetActive(false);
         }
 

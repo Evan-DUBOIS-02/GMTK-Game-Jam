@@ -173,6 +173,8 @@ MonoBehaviour:
   - {fileID: 3133062410104996963}
   _bombPrefab: {fileID: 3356625047252932605, guid: 08ffcc5809e317842aaef846c583258c, type: 3}
   _exitLevel: {fileID: 2401962122839804668}
+  _frontTorch: {fileID: 9153487588552917333, guid: 1d0e7da57a0a8ea49a265da4852d27ce, type: 3}
+  _sideTorch: {fileID: 5328823500246787752, guid: 470cbbeba079c5a46900dd45669b5fc2, type: 3}
 --- !u!1 &287985728806676560
 GameObject:
   m_ObjectHideFlags: 0
