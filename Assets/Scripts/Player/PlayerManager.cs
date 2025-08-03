@@ -56,15 +56,15 @@ namespace Player
             else
                 _isHoldinge = false;
         }
-
-        IEnumerator PauseThenRestart()
-        {
-            yield return new WaitForSecondsRealtime(2f);
-        }
+        
 
         public void ResetState()
         {
-            _isHoldingBomb = false;
+            GetComponentInChildren<Animator>().SetTrigger("Disappear");
+        }
+
+        public void ReturnToStartPosition()
+        {
             GetComponent<PlayerMovement>().InitializePosition();
         }
 
