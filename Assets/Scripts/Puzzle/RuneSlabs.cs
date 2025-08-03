@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Puzzle
@@ -15,6 +16,12 @@ namespace Puzzle
 
         public void EnableSlab()
         {
+            StartCoroutine(EnableLater());
+        }
+
+        private IEnumerator EnableLater()
+        {
+            yield return new WaitForSeconds(0.5f);
             GetComponent<BoxCollider2D>().enabled = true;
             GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         }

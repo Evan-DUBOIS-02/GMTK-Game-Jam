@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Player;
 using Puzzle;
 using TMPro;
-using UI;
 using UnityEngine;
+using UnityEngine.UI;
+using UI;
 
 namespace Game
 {
@@ -45,6 +47,10 @@ namespace Game
         // light
         [SerializeField] private GameObject _globalLight;
         
+        // Fade animation
+        private float _fadeDuration = 0.31f;
+        [SerializeField] private Image _fader;
+        
         private void Awake()
         {
             // Generate unique instance
@@ -61,6 +67,10 @@ namespace Game
             _interactables =  new List<Interactable>();
             _audioSource = GetComponent<AudioSource>();
             _globalLight.SetActive(false);
+            // Fade out
+            Color c = _fader.color;
+            _fader.color = new Color(c.r, c.g, c.b, 1);
+            StartCoroutine(FadeOut());
         }
 
         private void Update()
@@ -101,11 +111,62 @@ namespace Game
             GhostManager.Instance.StopRecording();
             // Reset player position
             _player.GetComponent<PlayerManager>().ResetState();
+            // Stop the current loop
+            _isLoopStarted = false;
+            StartCoroutine(LoopTransition());
+        }
+
+        public IEnumerator LoopTransition()
+        {
+            // Fade in
+            float elapsed = 0f;
+            Color c = _fader.color;
+
+            while (elapsed < _fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float alpha = Mathf.Lerp(0, 1, elapsed / _fadeDuration);
+                _audioSource.volume = Mathf.Lerp(0.5f, 0, elapsed / _fadeDuration);
+                _fader.color = new Color(c.r, c.g, c.b, alpha);
+                yield return null;
+            }
+
+            _fader.color = new Color(c.r, c.g, c.b, 1);
+            
+            // Reinitialize
+            ReinitializeForNextLoop();
+            yield return new WaitForSeconds(0.1f);
+            
+            // Fade out
+            StartCoroutine(FadeOut());
+        }
+
+        public IEnumerator FadeOut()
+        {
+            _audioSource.clip = _preRun;
+            _audioSource.volume = 0;
+            _audioSource.loop = true;
+            _audioSource.Play();
+            float elapsed = 0f;
+            Color c = _fader.color;
+
+            while (elapsed < _fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float alpha = Mathf.Lerp(1, 0, elapsed / _fadeDuration);
+                _audioSource.volume = Mathf.Lerp(0, 0.5f, elapsed / _fadeDuration);;
+                _fader.color = new Color(c.r, c.g, c.b, alpha);
+                yield return null;
+            }
+
+            _fader.color = new Color(c.r, c.g, c.b, 0);
+        }
+
+        public void ReinitializeForNextLoop()
+        {
             // Reset all interactble/puzzle states
             foreach(Interactable interactable in _interactables)
                 interactable.SetToDefaultState();
-            // Stop the current loop
-            _isLoopStarted = false;
             // New loop
             _numberOfLoop++;
             if(_numberOfLoop < 10)
@@ -113,9 +174,6 @@ namespace Game
             else
                 _numberOfLoopUI.text = _numberOfLoop.ToString();
             _timerUI.text = "20";
-            // Audio
-            _audioSource.clip = _preRun;
-            _audioSource.Play();
         }
         
         // Called by the puzzle generator to register the interactable/puzzle
@@ -134,6 +192,7 @@ namespace Game
                 _isLoopStarted = true;
                 // setup correct audio clip
                 _audioSource.clip = _musiques[Mathf.Clamp(_numberOfLoop, 0, _musiques.Count - 1)];
+                _audioSource.loop = false;
                 _audioSource.Play();
             }
         }
