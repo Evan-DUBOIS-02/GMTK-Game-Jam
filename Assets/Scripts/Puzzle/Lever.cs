@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Puzzle
@@ -7,6 +8,7 @@ namespace Puzzle
     {
         [SerializeField] private GameObject _leverOn;
         [SerializeField] private GameObject _leverOff;
+        [SerializeField] private GameObject _UI;
         
         private Door _door;
         public Door Door{get{return _door;} set{_door = value;}}
@@ -18,6 +20,7 @@ namespace Puzzle
             _isActive = false;
             SwitchSprite();
             _door.ManageDoor(_isActive);
+            _UI.SetActive(false);
         }
 
         public int Interact(Player.PlayerState state)
@@ -25,6 +28,7 @@ namespace Puzzle
             _isActive = true;
             SwitchSprite();
             _door.ManageDoor(_isActive);
+            _UI.SetActive(false);
             return 1;
         }
 
@@ -32,6 +36,18 @@ namespace Puzzle
         {
             _leverOn.SetActive(_isActive);
             _leverOff.SetActive(!_isActive);
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.tag == "Player" && !_isActive)
+                _UI.SetActive(true);
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.tag == "Player")
+                _UI.SetActive(false);
         }
     }
 }
