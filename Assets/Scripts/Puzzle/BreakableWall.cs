@@ -10,15 +10,15 @@ namespace Puzzle
 
         private bool _isHorizontal = false;
 
-        public void IsDisabled()
+        public void ManageWall(bool open)
         {
-            if (!_isHorizontal)
+            if (_isHorizontal)
             {
-                _breakableWallVertical.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                _breakableWallHorizontal.SetActive(!open);
             }
             else
             {
-                _breakableWallHorizontal.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                _breakableWallVertical.SetActive(!open);
             }
         }
 

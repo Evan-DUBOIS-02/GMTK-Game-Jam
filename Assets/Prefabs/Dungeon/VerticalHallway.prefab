@@ -1243,6 +1243,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _doorPrefab: {fileID: 2648790255498123107, guid: 12b72a437478a9a4b82e72e2d242fffe, type: 3}
   _breakableWallPrefab: {fileID: 3962335718568738796, guid: 5e79e2f063df2114a9c1630fbee448ba, type: 3}
+  _voidPrefab: {fileID: 821817559896946911, guid: d0e08677b3bc1b4428c3a6ff0a0497e2, type: 3}
+  _spikePrefab: {fileID: 6610263361163323710, guid: 1e878bfb21a2c0e4eb848a2177f8a67c, type: 3}
 --- !u!1 &8404492971593050302
 GameObject:
   m_ObjectHideFlags: 0

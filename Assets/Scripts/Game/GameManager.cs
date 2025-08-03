@@ -65,11 +65,10 @@ namespace Game
 
         public void StopLoop()
         {
-            Debug.Log("StopLoop");
             // Stop the state recording
             GhostManager.Instance.StopRecording();
             // Reset player position
-            _player.GetComponent<PlayerMovement>().InitializePosition();
+            _player.GetComponent<PlayerManager>().ResetState();
             // Reset all interactble/puzzle states
             foreach(Interactable interactable in _interactables)
                 interactable.SetToDefaultState();
@@ -85,10 +84,8 @@ namespace Game
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            Debug.Log("OnTriggerExit");
             if (!_isLoopStarted && other.GetComponent<PlayerManager>() != null)
             {
-                Debug.Log("StartLoop");
                 // Start state recording
                 GhostManager.Instance.StartRecording();
                 // Start the loop
