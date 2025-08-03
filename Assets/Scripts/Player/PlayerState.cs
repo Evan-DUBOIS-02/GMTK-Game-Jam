@@ -8,6 +8,7 @@ namespace Player
         public Vector3 Position;
         public bool IsInteracting;
         public bool IsPlacingBomb;
+        public bool IsFacingRight;
         // Animation state
         // Looking right or left
         // ...
@@ -18,6 +19,7 @@ namespace Player
             this.Position = Vector3.zero;
             this.IsInteracting = false; 
             this.IsPlacingBomb = false;
+            this.IsFacingRight = true;
         }
         
         // Copie constructor
@@ -28,6 +30,8 @@ namespace Player
                 this.Position = other.Position;
                 this.IsInteracting = other.IsInteracting;
                 this.IsPlacingBomb = other.IsPlacingBomb;
+                this.IsFacingRight = other.IsFacingRight;
+
             }
         }
     }

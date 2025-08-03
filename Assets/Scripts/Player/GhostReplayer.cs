@@ -16,10 +16,18 @@ namespace Player
 
         [SerializeField] private GameObject _bombPrefab;
         private GameObject _bombPlaced = null;
-        
+
+        Animator _animator;
+        [SerializeField]
+        GameObject _rendererGO;
+
+        public bool _isFacingRight;
         public void Init(List<PlayerState> states)
         {
             _states = states;
+            _animator = GetComponentInChildren<Animator>();
+            _isFacingRight = states[0].IsFacingRight;
+            _animator.SetBool("isFacingRight", _isFacingRight);
         }
 
         public void StopReplay()
@@ -45,7 +53,8 @@ namespace Player
             {
                 // apply position
                 transform.position = state.Position;
-                
+                FlipSprite(state);
+
                 // if interacting and near to interactable object, interact
                 if (state.IsInteracting && _currentInteractable != null)
                 {
@@ -78,6 +87,15 @@ namespace Player
             if (other.TryGetComponent(out interactable))
             {
                 _currentInteractable = null;
+            }
+        }
+
+        private void FlipSprite(PlayerState state)
+        {
+            if (_isFacingRight != state.IsFacingRight)
+            {
+                _isFacingRight = state.IsFacingRight;
+                _animator.SetBool("isFacingRight", _isFacingRight);
             }
         }
     }
