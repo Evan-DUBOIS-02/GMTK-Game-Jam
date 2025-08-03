@@ -1,4 +1,5 @@
 ﻿using System;
+using Game;
 using UnityEngine;
 
 namespace Player
@@ -34,6 +35,9 @@ namespace Player
 
         private void FixedUpdate()
         {
+            if (GameManager.Instance.IsEndLevel)
+                return;
+            
             Vector2 newPosition = _rb.position + _movement * _moveSpeed * Time.fixedDeltaTime;
             _rb.MovePosition(newPosition);
 

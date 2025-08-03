@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Game;
 using Puzzle;
 using UnityEngine;
 
@@ -51,6 +52,9 @@ namespace Player
             // Start apply each state to the ghost
             foreach (PlayerState state in _states)
             {
+                if (GameManager.Instance.IsEndLevel)
+                    break;
+                
                 // apply position
                 transform.position = state.Position;
                 FlipSprite(state);

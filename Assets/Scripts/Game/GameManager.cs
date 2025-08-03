@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Player;
 using Puzzle;
+using TMPro;
+using UI;
 using UnityEngine;
 
 namespace Game
@@ -13,18 +15,32 @@ namespace Game
         public static GameManager Instance => _instance;
         
         // Manage loop
+        private int _numberOfLoop;
+        [SerializeField] private TMP_Text _numberOfLoopUI;
         private bool _isLoopStarted;
-
-        [SerializeField]
-        private float _timeOfALoop;
-
+        [SerializeField] private float _timeOfALoop;
         private float _timeUntilLoopEnd;
+        private float _totalTime;
 
-        // Player ref (a faire: trouve via un tag que par SerializeField)
+        // Player ref
         [SerializeField] private GameObject _player;
         
         // Puzzle elements to reset at each loop
         List<Interactable> _interactables;
+        
+        // Audio
+        [Header("Audio")]
+        private AudioSource _audioSource;
+        [SerializeField] private AudioClip _preRun;
+        [SerializeField] private AudioClip _postRun;
+        [SerializeField] private List<AudioClip> _musiques;
+        
+        // End level
+        [NonSerialized] public bool IsEndLevel = false;
+        [SerializeField] private GameObject _endLevelUI;
+        
+        // light
+        [SerializeField] private GameObject _globalLight;
         
         private void Awake()
         {
@@ -40,10 +56,15 @@ namespace Game
             // Init
             _timeUntilLoopEnd = _timeOfALoop;
             _interactables =  new List<Interactable>();
+            _audioSource = GetComponent<AudioSource>();
+            _globalLight.SetActive(false);
         }
 
         private void Update()
         {
+            if (IsEndLevel)
+                return;
+            
             // if the player press R (a faire: quand temps ecoule ?)
             if (Input.GetKeyDown(KeyCode.R) && _isLoopStarted)
             {
@@ -53,6 +74,7 @@ namespace Game
 
             if (_isLoopStarted)
             {
+                _totalTime += Time.deltaTime;
                 if (_timeUntilLoopEnd <= 0)
                 {
                     StopLoop();
@@ -74,6 +96,12 @@ namespace Game
                 interactable.SetToDefaultState();
             // Stop the current loop
             _isLoopStarted = false;
+            // New loop
+            _numberOfLoop++;
+            _numberOfLoopUI.text = _numberOfLoop.ToString();
+            // Audio
+            _audioSource.clip = _preRun;
+            _audioSource.Play();
         }
         
         // Called by the puzzle generator to register the interactable/puzzle
@@ -90,22 +118,19 @@ namespace Game
                 GhostManager.Instance.StartRecording();
                 // Start the loop
                 _isLoopStarted = true;
+                // setup correct audio clip
+                _audioSource.clip = _musiques[Mathf.Clamp(_numberOfLoop, 0, _musiques.Count - 1)];
+                _audioSource.Play();
             }
         }
 
-        public void OnRetryClicked()
+        public void EndLevel()
         {
-            Debug.Log("RetryClicked");
-        }
-
-        public void OnNextClicked()
-        {
-            Debug.Log("NextClicked");
-        }
-
-        public void OnMenuClicked()
-        {
-            Debug.Log("MenuClicked");
+            IsEndLevel = true;
+            _audioSource.clip = _postRun;
+            _audioSource.Play();
+            _endLevelUI.SetActive(true);
+            _endLevelUI.GetComponent<EndLevelUI>().UpdateUI(_numberOfLoop, _totalTime);
         }
     }
 }

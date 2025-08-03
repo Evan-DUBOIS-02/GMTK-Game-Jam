@@ -31,6 +31,9 @@ namespace Dungeon
         [SerializeField] private List<GameObject> _botHintRoomTiles;
         [SerializeField] private List<GameObject> _leftHintRoomTiles;
         [SerializeField] private GameObject _bombPrefab;
+        
+        [Header("Level exit")]
+        [SerializeField] private GameObject _exitLevel;
 
         private Vector2Int _roomIndex;
         public Vector2Int RoomIndex{get{return _roomIndex;} set{_roomIndex = value;}}
@@ -104,6 +107,7 @@ namespace Dungeon
                 doorScript.SetSideRenderer(true);
             }
             IsExitRoom = true;
+            _exitLevel.SetActive(true);
             _exitDoor.transform.SetParent(transform);
         }
 
